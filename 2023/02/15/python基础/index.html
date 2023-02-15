@@ -173,7 +173,7 @@
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
         <span class="date-meta">
-            2023/02/13</span>
+            2023/02/15</span>
     </span>
     
     
@@ -269,7 +269,49 @@
 <p>​	由于Python源代码也是一个文本文件，所以，当你的源代码中包含中文的时候，在保存源代码时，就需要务必指定保存为UTF-8编码。当Python解释器读取源代码时，为了让它按UTF-8编码读取，我们通常在文件开头写上这两行：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h4><h3 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h3><p>​	布尔值和布尔代数的表示完全一致，一个布尔值只有<code>True</code>、<code>False</code>两种值，要么是<code>True</code>，要么是<code>False</code>，在Python中，可以直接用<code>True</code>、<code>False</code>表示布尔值（请注意大小写），也可以通过布尔运算计算出来：</p>
+<h4 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h4><h5 id="使用-进行格式化"><a href="#使用-进行格式化" class="headerlink" title="使用 % 进行格式化"></a>使用 % 进行格式化</h5><p>​		如何输出格式化的字符串。我们经常会输出类似<code>&#39;亲爱的xxx你好！你xx月的话费是xx，余额是xx&#39;</code>之类的字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(&#x27;你好，我是%s,我今年%d&#x27;%(&#x27;小张&#x27;,16))</span><br><span class="line">你好，我是小张,我今年16</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>替换内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%d</td>
+<td>整数</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮点数</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六进制整数</td>
+</tr>
+</tbody></table>
+<p>​	格式化整数和浮点数还可以指定是否补0和整数与小数的位数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;%2d-%02d&#x27;</span> % (<span class="number">3</span>, <span class="number">1</span>)) 02的意思的显示<span class="number">2</span>位数，不满足的用<span class="number">0</span>填充，如果没有<span class="number">0</span>则默认用空格填充</span><br><span class="line">	<span class="number">3</span>,01</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;%.2f&#x27;</span> % <span class="number">3.1415926</span>)  <span class="number">.2</span>的意思是 保留小数点后几位</span><br><span class="line"><span class="number">3.14</span></span><br></pre></td></tr></table></figure>
+
+<p>​	<code>%s</code>永远起作用，它会把任何数据类型转换为字符串：</p>
+<h5 id="使用-format-进行格式化"><a href="#使用-format-进行格式化" class="headerlink" title="使用 format() 进行格式化"></a>使用 format() 进行格式化</h5><p>​	另一种格式化字符串的方法是使用字符串的<code>format()</code>方法，它会用传入的参数依次替换字符串内的占位符<code>&#123;0&#125;</code>、<code>&#123;1&#125;</code>……，不过这种方式写起来比%要麻烦得多：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;你好,我是&#123;0&#125;,我今年&#123;1&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;小张&#x27;</span>,<span class="number">16</span>))</span><br><span class="line">你好,我是小张,我今年<span class="number">16</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="使用-f-string-进行格式化"><a href="#使用-f-string-进行格式化" class="headerlink" title="使用 f-string 进行格式化"></a>使用 f-string 进行格式化</h5><p>​	最后一种格式化字符串的方法是使用以<code>f</code>开头的字符串，称之为<code>f-string</code>，它和普通字符串不同之处在于，字符串如果包含<code>&#123;xxx&#125;</code>，就会以对应的变量替换：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="string">&#x27;小张&#x27;</span></span><br><span class="line">b=<span class="number">16.1234</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;你好，我是<span class="subst">&#123;a&#125;</span>,我今年<span class="subst">&#123;b:<span class="number">.02</span>f&#125;</span>&#x27;</span>)</span><br><span class="line">你好，我是小张,我今年<span class="number">16.12</span></span><br></pre></td></tr></table></figure>
+
+<p>​	<code>&#123;a&#125;</code>被变量<code>a</code>的值替换，<code>&#123;b:.2f&#125;</code>被变量<code>s</code>的值替换，并且<code>:</code>后面的<code>.2f</code>指定了格式化参数（即保留两位小数），因此，<code>&#123;b:.2f&#125;</code>的替换结果是<code>16.12</code>。</p>
+<h3 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h3><p>​	布尔值和布尔代数的表示完全一致，一个布尔值只有<code>True</code>、<code>False</code>两种值，要么是<code>True</code>，要么是<code>False</code>，在Python中，可以直接用<code>True</code>、<code>False</code>表示布尔值（请注意大小写），也可以通过布尔运算计算出来：</p>
 <p>​	<code>and</code>运算是与运算，只有所有都为<code>True</code>，<code>and</code>运算结果才是<code>True</code></p>
 <p>​	<code>or</code>运算是或运算，只要其中有一个为<code>True</code>，<code>or</code>运算结果就是<code>True</code></p>
 <p>​	<code>not</code>运算是非运算，它是一个单目运算符，把<code>True</code>变成<code>False</code>，<code>False</code>变成<code>True</code></p>
@@ -298,6 +340,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">10</span>%<span class="number">3.2</span>)</span><br><span class="line"><span class="number">0.39999999999999947</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="number">9</span>%<span class="number">3</span>)</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
 
 
+
+<h3 id="list-数组"><a href="#list-数组" class="headerlink" title="list 数组"></a>list 数组</h3><h3 id="tuple-元祖"><a href="#tuple-元祖" class="headerlink" title="tuple 元祖"></a>tuple 元祖</h3>
     </div>
     
     <div class="post-footer">
@@ -353,7 +397,7 @@
             Table of Contents
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%95%B0"><span class="toc-text">整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%EF%BC%88%E5%B0%8F%E6%95%B0%EF%BC%89"><span class="toc-text">浮点数（小数）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A0%81"><span class="toc-text">编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%BC%96%E7%A0%81%E4%BD%BF%E7%94%A8"><span class="toc-text">字符串的编码使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-text">字符串格式化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="toc-text">布尔值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E5%80%BC"><span class="toc-text">空值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#x2F-%E5%92%8C-x2F-x2F-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">&#x2F; 和 &#x2F;&#x2F;  的区别</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%95%B0"><span class="toc-text">整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%EF%BC%88%E5%B0%8F%E6%95%B0%EF%BC%89"><span class="toc-text">浮点数（小数）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A0%81"><span class="toc-text">编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%BC%96%E7%A0%81%E4%BD%BF%E7%94%A8"><span class="toc-text">字符串的编码使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-text">字符串格式化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-%E8%BF%9B%E8%A1%8C%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-text">使用 % 进行格式化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-format-%E8%BF%9B%E8%A1%8C%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-text">使用 format() 进行格式化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-f-string-%E8%BF%9B%E8%A1%8C%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-text">使用 f-string 进行格式化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="toc-text">布尔值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E5%80%BC"><span class="toc-text">空值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#x2F-%E5%92%8C-x2F-x2F-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">&#x2F; 和 &#x2F;&#x2F;  的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#list-%E6%95%B0%E7%BB%84"><span class="toc-text">list 数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tuple-%E5%85%83%E7%A5%96"><span class="toc-text">tuple 元祖</span></a></li></ol></li></ol>
         
     </div>
 </aside>
