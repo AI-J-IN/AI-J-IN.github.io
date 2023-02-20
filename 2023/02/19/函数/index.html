@@ -190,7 +190,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">help</span>(<span class="built_in">abs</span>))</span><br><span class="line"></span><br><span class="line">Help on built-<span class="keyword">in</span> function <span class="built_in">abs</span> <span class="keyword">in</span> module builtins:</span><br><span class="line"></span><br><span class="line"><span class="built_in">abs</span>(x, /)</span><br><span class="line">    Return the absolute value of the argument.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h4 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h4><p>​	之前说过python的数据类型可以分为六种，字典，数组，元组，集合，字符串，数字。</p>
-<p>将float转换成整数是，只取对应的整数部分，小数部分则没有 int(12,23)&#x3D;12</p>
+<p>将float转换成整数是，只取对应的整数部分，小数部分则没有 int(12.23)&#x3D;12</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bool</span>(<span class="number">1</span>)</span><br><span class="line">ture</span><br><span class="line"><span class="built_in">bool</span>(<span class="number">0</span>)</span><br><span class="line">false</span><br><span class="line">之前在条件判断时，说过，当非零值，非空字符串，非空数组等，则是ture，否则就为false</span><br></pre></td></tr></table></figure>
 
 <h3 id="给函数起‘’别名‘’"><a href="#给函数起‘’别名‘’" class="headerlink" title="给函数起‘’别名‘’"></a>给函数起‘’别名‘’</h3><p>​	函数名其实就是指向一个函数对象的引用，完全可以把函数名赋给一个变量，相当于给这个函数起了一个“别名”：</p>
@@ -296,6 +296,7 @@
 <p><code>fact(5)</code>对应的<code>fact_iter(5, 1)</code>的调用如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fact_iter(5, 1)</span><br><span class="line">fact_iter(4, 5)</span><br><span class="line">fact_iter(3, 20)</span><br><span class="line">fact_iter(2, 60)</span><br><span class="line">fact_iter(1, 120)</span><br><span class="line"></span><br><span class="line">120</span><br></pre></td></tr></table></figure>
 
+<p>​	尾递归是减少中间计算结果的保存，只保留最后的结果</p>
 <p>​	尾递归调用时，如果做了优化，栈不会增长，因此，无论多少次调用也不会导致栈溢出。</p>
 <p>遗憾的是，大多数编程语言没有针对尾递归做优化，Python解释器也没有做优化，所以，即使把上面的<code>fact(n)</code>函数改成尾递归方式，也会导致栈溢出。</p>
 <h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>​	使用递归函数的优点是逻辑简单清晰，缺点是过深的调用会导致栈溢出。</p>
@@ -318,6 +319,12 @@
     </div>
 </article>
 <div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2023/02/20/%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/" class="pre-post btn btn-default" title='高级特性'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            高级特性</span>
+    </a>
     
     
     <a href="/2023/02/16/%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%E5%92%8C%E5%BE%AA%E7%8E%AF/" class="next-post btn btn-default" title='条件判断和循环'>
