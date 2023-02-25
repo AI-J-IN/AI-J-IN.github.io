@@ -1,0 +1,495 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="四大基石" />
+
+
+<meta name="description" content="Flink_四大基石（Checkpoint、State、Time、Window）基本概念窗口 Window
+​	流计算中一般在对流数据进行操作之前都会&#x3D;&#x3D;先进行开窗&#x3D..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Flink_四大基石 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/编程语言/"><i class="fa "></i>
+                                编程语言</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/数学/"><i class="fa "></i>
+                                数学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/机器学习/"><i class="fa "></i>
+                                机器学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/深度学习/"><i class="fa "></i>
+                                深度学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/离线/"><i class="fa "></i>
+                                离线</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/实时/"><i class="fa "></i>
+                                实时</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Flink_四大基石">
+            
+            Flink_四大基石
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%AE%9E%E6%97%B6/">实时</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/" rel="tag">四大基石</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/02/24</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Flink-四大基石（Checkpoint、State、Time、Window）"><a href="#Flink-四大基石（Checkpoint、State、Time、Window）" class="headerlink" title="Flink_四大基石（Checkpoint、State、Time、Window）"></a>Flink_四大基石（Checkpoint、State、Time、Window）</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="窗口-Window"><a href="#窗口-Window" class="headerlink" title="窗口 Window"></a>窗口 Window</h3><ul>
+<li>​	流计算中一般在对流数据进行操作之前都会&#x3D;&#x3D;先进行开窗&#x3D;&#x3D;，即基于一个什么样的窗口上做这个计算</li>
+<li>​	Flink提供了&#x3D;&#x3D;开箱即用的各种窗口&#x3D;&#x3D;，比如滑动窗口、滚动窗口、会话窗口以及非常灵活的自定义的窗口</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/dev/datastream/operators/windows/"></a></p>
+<h3 id="时间-Time"><a href="#时间-Time" class="headerlink" title="时间 Time"></a>时间 Time</h3><ul>
+<li>Flink中窗口计算，基本上都是&#x3D;&#x3D;基于时间设置窗口&#x3D;&#x3D;</li>
+<li>Flink还实现了Watermark的机制，能够支持基于事件时间的处理，能够容忍<strong>迟到&#x2F;乱序</strong>的数据</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/concepts/time/"></a></p>
+<h3 id="状态-State"><a href="#状态-State" class="headerlink" title="状态 State"></a>状态 State</h3><ul>
+<li>​	Flink计算引擎，自身就是&#x3D;&#x3D;基于状态计算框架&#x3D;&#x3D;，默认情况下程序自己管理状态</li>
+<li>​	提供&#x3D;&#x3D;一致性的语义&#x3D;&#x3D;，使得用户在编程时能够更轻松、更容易地去管理状态</li>
+<li>​	提供一套非常&#x3D;&#x3D;简单明了的State API&#x3D;&#x3D;，包括ValueState、ListState、MapState，BroadcastState</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/concepts/stateful-stream-processing/"></a></p>
+<h3 id="检查点-Checkpoint"><a href="#检查点-Checkpoint" class="headerlink" title="检查点 Checkpoint"></a>检查点 Checkpoint</h3><ul>
+<li>Flink Checkpoint检查点：&#x3D;&#x3D;保存状态数据&#x3D;&#x3D;</li>
+<li>基于Chandy-Lamport算法实现了一个&#x3D;&#x3D;分布式的一致性的快照&#x3D;&#x3D;，从而提供了一致性的语义</li>
+<li>进行Checkpoint后，可以设置&#x3D;&#x3D;自动进行故障恢复&#x3D;&#x3D;</li>
+<li>保存点Savepoint，人工进行Checkpoint操作，进行程序恢复执行</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/dev/datastream/fault-tolerance/checkpointing/"></a></p>
+<h2 id="Flink-Window"><a href="#Flink-Window" class="headerlink" title="Flink Window"></a>Flink Window</h2><p>​	窗口（window）就是从 Streaming 到 Batch 的一个桥梁&#96;。窗口将无界流（unbounded data stream）划分很多有界流（bounded stream），对无界流进行计算：批处理Batch Processing。</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/1.png"></p>
+<p>​	</p>
+<p>​	在实际业务需求中，往往说窗口，指的就是&#x3D;&#x3D;基于时间Time窗口&#x3D;&#x3D;，比如最近1分钟内数据，指的就是1分钟时间内产生的数据，放在窗口中。</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/2.png"></p>
+<h3 id="Flink-Window-窗口的结构"><a href="#Flink-Window-窗口的结构" class="headerlink" title="Flink Window 窗口的结构"></a>Flink Window 窗口的结构</h3><ul>
+<li>第一、<strong>窗口分配器（WindowAssigner）</strong>：将数据流中的元素分配到对应的窗口。</li>
+<li>第二、<strong>窗口函数（Window Function）</strong>：当满足窗口触发条件后，对窗口内的数据使用窗口处理函数（Window Function）进行处理，常用的有reduce、aggregate、process。</li>
+<li>其他的<strong>trigger</strong>、<strong>evictor</strong>则是窗口的触发和销毁过程中的附加选项，主要面向需要更多自定义的高级编程者，如果不设置则会使用默认的配置。</li>
+</ul>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/3.png"></p>
+<p>​	</p>
+<p>​	上图是<strong>窗口的生命周期示意图</strong>，假如设置的是<strong>一个10分钟的滚动窗口</strong>，第一个窗口的起始时间是0:00，结束时间是0:10，后面以此类推。当数据流中的元素流入后，窗口分配器会根据时间（Event Time或Processing Time）分配给相应的窗口。相应窗口满足了触发条件，比如已经到了窗口的结束时间，会触发相应的Window Function进行计算。</p>
+<p>​	从数据类型上来看，1个DataStream经过<strong>keyBy</strong>转换成KeyedStream，再经过<strong>window</strong>转换成WindowedStream，要在之上进行<strong>reduce、aggregate或process</strong>等Window Function，对数据进行必要的聚合操作。</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/4.png"></p>
+<h3 id="Flink-Window之Window-类型"><a href="#Flink-Window之Window-类型" class="headerlink" title="Flink Window之Window 类型"></a>Flink Window之Window 类型</h3><p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_22-44-48.png"></p>
+<blockquote>
+<ul>
+<li>1）、时间窗口<code>TimeWindow</code><ul>
+<li>按照时间间隔划分出窗口，并对窗口中数据进行计</li>
+<li>分为：滚动（Tumbling）窗口和滑动（Sliding）窗口</li>
+</ul>
+</li>
+<li>2）、计数窗口<code>CountWindow</code><ul>
+<li>按照<code>数据条目数</code>进行设置窗口，比如每10条数据统计一次</li>
+<li>分为：滚动窗口和滑动窗口</li>
+</ul>
+</li>
+<li>3）、会话窗口<code>SessionWindow</code><ul>
+<li>会话Session相关，表示多久没有来数据，比如5分钟都没有来数据，将前面的数据作为一个窗口</li>
+<li>当登录某个网站，超过一定时间对网站网页未进行任何操作（比如30分钟），自动退出登录，需要用户重新登录，Session会话超时</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_22-49-03.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 1、滚动窗口（翻滚窗口或者固定窗口）</span><br><span class="line">	基于时间滚动窗口</span><br><span class="line">	基于计数滚动窗口</span><br><span class="line">	</span><br><span class="line"># 2、滑动窗口</span><br><span class="line">	基于滑动窗口</span><br><span class="line">	基于计数滑动窗口</span><br><span class="line">	</span><br><span class="line"># 3、会话窗口</span><br><span class="line">	基于时间，设置超时时间间隔</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>1）、&#x3D;&#x3D;time-window（时间窗口）&#x3D;&#x3D;</p>
+<ul>
+<li>根据<code>时间划分</code>窗口，如每xx分钟统计，最近xx分钟的数据</li>
+<li><a href>实时分析：趋势分析</a></li>
+</ul>
+</blockquote>
+<blockquote>
+<p>2）、&#x3D;&#x3D;count-window（计数窗口）&#x3D;&#x3D;：</p>
+<ul>
+<li>根据<code>数量划分</code>窗口，如每xx个数据统计，最近xx个数据</li>
+<li>[此种方式窗口计算，在实际项目中使用不多，但是有些特殊业务需要，需要使用此场景。](</li>
+</ul>
+</blockquote>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_22-53-41.png"></p>
+<p>在Flink窗口计算中，无论时间窗口还是计数窗口，都可以分为2种类型：<code>滚动Tumbling和滑动Sliding窗口</code></p>
+<p>​											[窗口有两个重要的属性: 窗口<code>大小size</code>和滑动<code>间隔slide</code>](</p>
+<p>滚动窗口（Tumbling Window）</p>
+<p>​	条件：**窗口大小size  &#x3D;   滑动间隔 slide</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_22-56-37.png"></p>
+<p>滑动窗口（Sliding Window）</p>
+<ul>
+<li>条件：<strong>窗口大小 !&#x3D; 滑动间隔</strong>，通常条件【<code>窗口大小size &gt; 滑动间隔slide</code>】</li>
+</ul>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_22-57-11.png"></p>
+<p>上面图中展示的以计数窗口CountWindow讲解滚动窗口和滑动窗口，下图为以时间窗口为例讲解</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_22-58-37.png"></p>
+<p> &#x3D;&#x3D;session窗口&#x3D;&#x3D;跟滚动窗口和滑动窗口相比，不会有重叠和固定的开始时间和结束时间的情况，相反，<strong>当它在一个固定的时间周期内不再收到元素，即非活动间隔产生，那个这个窗口就会关闭</strong>。</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_22-59-42.png"></p>
+<p>一个session窗口通过一个session间隔来配置，这个session间隔定义了非活跃周期的长度，当这个非活跃周期产生，那么当前的session将关闭并且后续的元素将被分配到新的session窗口中去。</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-24_23-01-30.png"></p>
+<p>会话窗口，基于时间设置间隔Gap，产出窗口，对窗口中数据进行计算。</p>
+<h2 id="Flink-Time"><a href="#Flink-Time" class="headerlink" title="Flink Time"></a>Flink Time</h2><p>​	在Flink 流式处理中，会涉及到时间的不同概念，如下图所示</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_09-59-22.png"></p>
+<ul>
+<li><p>1）、事件时间<code>EventTime</code></p>
+<ul>
+<li>事件真真正正发生产生的时间，比如订单数据中订单时间表示订单产生的时间</li>
+</ul>
+</li>
+<li><p>2）、摄入时间<code>IngestionTime</code></p>
+<ul>
+<li>数据被流式程序获取的时间</li>
+</ul>
+</li>
+<li><p>3）、处理时间<code>ProcessingTime</code></p>
+<ul>
+<li>事件真正被处理&#x2F;计算的时间</li>
+</ul>
+</li>
+</ul>
+<p>以上的三个时间，实际业务计算时更加关注哪一个？</p>
+<p>答案是： EventTime（因为：事件时间更能反应事件本质，只要事件时间一产生就不会变化）</p>
+<p>通过几个示例，感受对数据处理时，需要使用基于<strong>事件时间EventTime</strong>进行分析，更加合理化</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_10-04-07.png"></p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_10-04-23.png"></p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_10-04-53.png"></p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_10-05-34.png"></p>
+<blockquote>
+<p>所以在实际项目中，Flink流计算中窗口计算，往往就是 <a href>基于事件时间EventTime Window窗口分析。</a></p>
+</blockquote>
+<p>​					[所以Flink 1.12版本开始，基于时间time窗口Window分析，默认时间语义：EventTime事件时间。](</p>
+<p>​	</p>
+<p>​	此外，Flink 框架新版本中，Time时间语义仅仅支持：**事件时间EventTime和处理时间ProcessingTime</p>
+<h2 id="乱序数据处理之Watermark"><a href="#乱序数据处理之Watermark" class="headerlink" title="乱序数据处理之Watermark"></a>乱序数据处理之Watermark</h2><p>​	基于&#x3D;&#x3D;事件时间EventTime窗口&#x3D;&#x3D;分析，默认情况下，如果某个窗口触发计算以后，再来一条窗口内的数据，此时不会计算这条数据，而是直接丢弃。</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_10-22-42.png"></p>
+<p>​	流处理从事件产生，到流经 source，再到 operator，中间是有一个过程和时间的，虽然大部分情况下，流到 operator 的数据都是按照事件产生的时间顺序来的，但是也不排除由于网络、背压等原因，导致乱序的产生，&#x3D;&#x3D;所谓乱序，就是指 Flink 接收到的事件的先后顺序不是严格按照事件的 Event Time 顺序排列的&#x3D;&#x3D;，所以 Flink 最初设计的时候，就考虑到了网络延迟，网络乱序等问题，所以提出了一个抽象概念：<code>水印（WaterMark）</code>；</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_10-23-20.png"></p>
+<p>​	在实际业务数据中，数据乱序到达流处理程序，属于正常现象，原因在于<strong>网络延迟导致数据延迟，无法避免的</strong>，所以应该可以<a href>允许数据延迟达到（在某个时间范围内），依然参与窗口计算</a>。</p>
+<p>​				比如允许数据最大乱序延迟时间为2秒，那么此时只要符合时间范围乱序数据都会处理，此种机制：<strong>Watermark水印机制</strong>。</p>
+<p>[水印机制Watermark：允许数据乱序到达，在对应窗口中进行计算（延迟时间很短）](</p>
+<h3 id="Watermark水位线定义"><a href="#Watermark水位线定义" class="headerlink" title="Watermark水位线定义"></a>Watermark水位线定义</h3><p>​	Watermark 就是 给数据再额外的加一个时间列，也就是 Watermark 是个 时间戳！</p>
+<p>查看Watermark源码，可以看到其中有一个属性：timestamp时间戳</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_10-49-28.png"></p>
+<h4 id="Watermaek-如何计算"><a href="#Watermaek-如何计算" class="headerlink" title="Watermaek 如何计算"></a>Watermaek 如何计算</h4><p>Watermark &#x3D; 数据的事件事件 - 最大允许的延迟时间或乱序时间</p>
+<p>针对窗口计算时，Watermark值计算，参考整个窗口中数据计算</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_13-22-42.png"></p>
+<p>Watermark是用来触发窗口计算的！</p>
+<p>窗口计算的触发条件是：</p>
+<ol>
+<li>窗口中有数据</li>
+<li>Watermark &gt;&#x3D; 窗口的结束时间</li>
+</ol>
+<p>当设置水位Watermark以后，窗口触发计算和乱序数据达到处理流程</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_13-54-17.png"></p>
+<p>​	基于事件时间窗口统计，往往存在数据乱序达到（由于网络延迟原因），所以设置watermark水印机制，允许数据短时间内延迟达到，依然进行处理数据。</p>
+<h2 id="延迟数据处理之Allowed-Lateness"><a href="#延迟数据处理之Allowed-Lateness" class="headerlink" title="延迟数据处理之Allowed Lateness"></a>延迟数据处理之Allowed Lateness</h2><p><a href>默认情况下，当watermark通过end-of-window之后，再有之前的数据到达时，这些数据会被删除。</a>为了避免有些迟到的数据被删除，因此产生了<strong>allowedLateness</strong>的概念。</p>
+<ul>
+<li>简单来讲，allowedLateness就是针对event time而言，对于watermark超过end-of-window之后，还<a href>允许有一段时间（也是以event time来衡量）来等待之前的数据到达，以便再次处理这些数据</a>。</li>
+<li>默认情况下，如果不指定allowedLateness，其值是0，即对于watermark超过end-of-window之后，还有此window的数据到达时，这些数据被删除掉了。</li>
+</ul>
+<blockquote>
+<p>​		<code>延迟数据</code>是指：在当前窗口【假设窗口范围为10-15】已经计算之后，又来了一个属于该窗口的数据【假设事件时间为13】，这时候仍<code>会触发window操作</code>，这种数据就称为延迟数据。</p>
+</blockquote>
+<p>​		</p>
+<p>​		Allowed Lateness 机制允许用户<strong>设置一个允许的最大迟到时⻓</strong>。Flink 会在窗口关闭后一直保存窗口的状态直至超过允许迟到时⻓，这期间的迟到事件不会被丢弃，而是默认会触发窗口重新计算<strong>。因为保存窗口状态需要额外内存</strong>，并且如果窗口计算使用了ProcessWindowFunction， API 还可能使得每个迟到事件触发一次窗口的全量计算，<strong>代价比较大，所以允许迟到时⻓不宜设得太⻓，迟到事件也不宜过多</strong>，否则应该考虑降低水位线提高的速度或者调整算法。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p><a href>针对基于事件时间EventTime窗口分析，如何解决<code>乱序数据</code>和<code>延迟数据</code>的呢？？？</a></p>
+</blockquote>
+<ul>
+<li><strong>1）、乱序数据：Watermark</strong><ul>
+<li>使用水位线Watermark，给每条数据加上一个时间戳</li>
+<li>Watermark &#x3D; 数据事件时间 - 最大允许乱序时间</li>
+<li>当数据的Watermark &gt;&#x3D; 窗口结束时间，并且窗口内有数据，触发窗口数据计算</li>
+</ul>
+</li>
+<li><strong>2）、延迟数据：AllowedLateness</strong><ul>
+<li>设置方法参数：<code>allowedLateness</code>，表示允许延迟数据最多可以迟到多久，还可以进行计算（保存窗口，并且触发窗口计算）</li>
+<li><a href>当某个窗口触发计算以后，继续等待多长时间，如果在等待时间范围内，有数据达到时，依然会触发窗口计算。如果到达等待时长以后，没有数据达到，销毁窗口数据信息。</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="延迟数据处理之Side-Output"><a href="#延迟数据处理之Side-Output" class="headerlink" title="延迟数据处理之Side Output"></a>延迟数据处理之Side Output</h2><p>​	此外，如果延迟数据超过设置<code>allowedLateness</code>时长到达，可以通过<strong>侧边流Side OutputTag保存延迟数据</strong>，然后进行单独处理</p>
+<p>​	如下所示：基于事件时间窗口分析，数据乱序（watermark）、数据延迟（Allowedness）和非常延迟（SideOutput）处理方案示意图。	</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_14-56-53.png"></p>
+<blockquote>
+<p>用<code>AllowedLateness</code> 与 <code>SideOutputLateData</code>处理迟到数据</p>
+</blockquote>
+<ul>
+<li><strong>AllowedLateness</strong>: 窗口销毁前，迟到数据，会继续触发窗口计算。<ul>
+<li>Globle Window, 此值默认Long.MAX_VALUE,即窗口永远不会结束；</li>
+<li>其他窗口，此值默认0，即直接丢弃，不再触发窗口计算。</li>
+</ul>
+</li>
+<li><strong>SideOutputLateData</strong>: 窗口销毁后，依然迟到的数据，可单独收集起来。<ul>
+<li>默认无。</li>
+<li>如当AllowedLateness设置为0，即可通过SideOutputLateData将所有迟到数据都收集起来，另做处理。</li>
+</ul>
+</li>
+</ul>
+<p><code>状态State</code>和检查点<code>Checkpoint</code>、端到端精确性一次语义（&#x3D;&#x3D;EOS&#x3D;&#x3D;）。</p>
+<p>​	Flink 流式计算引擎，属于<strong>状态计算框架</strong>，在程序运行时，<a href>管理状态和基于状态计算</a>。对程序状态State进行快照和保存：<strong>Checkpoint（程序自动执行）</strong>和<strong>SavePoint（人为手动执行）</strong>。</p>
+<p><img src="/2023/02/24/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-25_22-24-42.png"></p>
+<h2 id="状态State"><a href="#状态State" class="headerlink" title="状态State"></a>状态State</h2>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/02/24/Flink-Sql/" class="next-post btn btn-default" title='Flink_Sql'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Flink_Sql</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='shenliyang/snippet-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3%EF%BC%88Checkpoint%E3%80%81State%E3%80%81Time%E3%80%81Window%EF%BC%89"><span class="toc-text">Flink_四大基石（Checkpoint、State、Time、Window）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3-Window"><span class="toc-text">窗口 Window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4-Time"><span class="toc-text">时间 Time</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81-State"><span class="toc-text">状态 State</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%82%B9-Checkpoint"><span class="toc-text">检查点 Checkpoint</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Window"><span class="toc-text">Flink Window</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Window-%E7%AA%97%E5%8F%A3%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">Flink Window 窗口的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Window%E4%B9%8BWindow-%E7%B1%BB%E5%9E%8B"><span class="toc-text">Flink Window之Window 类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Time"><span class="toc-text">Flink Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%B1%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BWatermark"><span class="toc-text">乱序数据处理之Watermark</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Watermark%E6%B0%B4%E4%BD%8D%E7%BA%BF%E5%AE%9A%E4%B9%89"><span class="toc-text">Watermark水位线定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Watermaek-%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97"><span class="toc-text">Watermaek 如何计算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BAllowed-Lateness"><span class="toc-text">延迟数据处理之Allowed Lateness</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BSide-Output"><span class="toc-text">延迟数据处理之Side Output</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81State"><span class="toc-text">状态State</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
