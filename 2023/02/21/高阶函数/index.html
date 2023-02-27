@@ -324,7 +324,86 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def inc():</span><br><span class="line">    x = 0</span><br><span class="line">    def fn():</span><br><span class="line">        # nonlocal x</span><br><span class="line">        x = x + 1</span><br><span class="line">        return x</span><br><span class="line">    return fn</span><br><span class="line"></span><br><span class="line">f = inc()</span><br><span class="line">print(f()) # 1</span><br><span class="line">print(f()) # 2</span><br></pre></td></tr></table></figure>
 
 <p>​	原因是<code>x</code>作为局部变量并没有初始化，直接计算<code>x+1</code>是不行的。但我们其实是想引用<code>inc()</code>函数内部的<code>x</code>，所以需要在<code>fn()</code>函数内部加一个<code>nonlocal x</code>的声明。加上这个声明后，解释器把<code>fn()</code>的<code>x</code>看作外层函数的局部变量，它已经被初始化了，可以正确计算<code>x+1</code></p>
-<h4 id="使用闭包时，对外层变量赋值前，需要先使用nonlocal声明该变量不是当前函数的局部变量。"><a href="#使用闭包时，对外层变量赋值前，需要先使用nonlocal声明该变量不是当前函数的局部变量。" class="headerlink" title="使用闭包时，对外层变量赋值前，需要先使用nonlocal声明该变量不是当前函数的局部变量。"></a>使用闭包时，对外层变量赋值前，需要先使用nonlocal声明该变量不是当前函数的局部变量。</h4>
+<p>​	使用闭包时，对外层变量赋值前，需要先使用nonlocal声明该变量不是当前函数的局部变量。</p>
+<h3 id="匿名函数-lambda"><a href="#匿名函数-lambda" class="headerlink" title="匿名函数   (lambda)"></a>匿名函数   (lambda)</h3><p>​	当我们在传入函数时，有些时候，不需要显式地定义函数，直接传入匿名函数更方便。</p>
+<p>在Python中，对匿名函数提供了有限支持。还是以<code>map()</code>函数为例，计算f(x)&#x3D;x2时，除了定义一个<code>f(x)</code>的函数外，还可以直接传入匿名函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))</span><br><span class="line">[1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br></pre></td></tr></table></figure>
+
+<p>通过对比可以看出，匿名函数<code>lambda x: x * x</code>实际上就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def f(x):</span><br><span class="line">    return x * x</span><br></pre></td></tr></table></figure>
+
+<h4 id><a href="#" class="headerlink" title></a></h4><p>​	关键字<code>lambda</code>表示匿名函数，冒号前面的<code>x</code>表示函数参数。</p>
+<p>匿名函数有个限制，就是只能有一个表达式，不用写<code>return</code>，返回值就是该表达式的结果。</p>
+<p>用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> f = lambda x: x * x</span><br><span class="line"> print(f)</span><br><span class="line">&lt;function &lt;lambda&gt; at 0x101c6ef28&gt;</span><br><span class="line"> print(f(5))</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<p>​	同样，也可以把匿名函数作为返回值返回，比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def build(x, y):</span><br><span class="line">    return lambda: x +  y</span><br><span class="line">    </span><br><span class="line">print(build(10,2)())    </span><br><span class="line">12</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="装饰器（Decorator）"><a href="#装饰器（Decorator）" class="headerlink" title="装饰器（Decorator）"></a>装饰器（Decorator）</h3><p>​	由于函数也是一个对象，而且函数对象可以被赋值给变量，所以，通过变量也能调用该函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> def now():</span><br><span class="line">     print(&#x27;2015-3-25&#x27;)</span><br><span class="line"></span><br><span class="line"> f = now</span><br><span class="line"> </span><br><span class="line"> print(f())</span><br><span class="line">2015-3-25</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	函数对象有一个<code>__name__</code>属性（注意：是前后各两个下划线），可以拿到函数的名字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print( now.__name__)</span><br><span class="line">&#x27;now&#x27;</span><br><span class="line">print( f.__name__ )</span><br><span class="line">&#x27;now&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	现在，假设我们要增强<code>now()</code>函数的功能，比如，在函数调用前后自动打印日志，但又不希望修改<code>now()</code>函数的定义，这种在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）。</p>
+<p>​	本质上，decorator就是一个返回函数的高阶函数。所以，我们要定义一个能打印日志的decorator，可以定义如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def log(func):</span><br><span class="line">    def wrapper(*args, **kw):</span><br><span class="line">        print(&#x27;call %s():&#x27; % func.__name__)</span><br><span class="line">        return func(*args, **kw)</span><br><span class="line">    return wrapper</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	观察上面的<code>log</code>，因为它是一个decorator，所以接受一个函数作为参数，并返回一个函数。我们要借助Python的@语法，把decorator置于函数的定义处</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@log</span><br><span class="line">def now():</span><br><span class="line">    print(&#x27;2015-3-25&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>​	调用<code>now()</code>函数，不仅会运行<code>now()</code>函数本身，还会在运行<code>now()</code>函数前打印一行日志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print( now())</span><br><span class="line">call now():</span><br><span class="line">2015-3-25</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	把<code>@log</code>放到<code>now()</code>函数的定义处，相当于执行了语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">now = log(now)</span><br></pre></td></tr></table></figure>
+
+<p>由于<code>log()</code>是一个decorator，返回一个函数，所以，原来的<code>now()</code>函数仍然存在，只是现在同名的<code>now</code>变量指向了新的函数，于是调用<code>now()</code>将执行新函数，即在<code>log()</code>函数中返回的<code>wrapper()</code>函数。</p>
+<p><code>wrapper()</code>函数的参数定义是<code>(*args, **kw)</code>，因此，<code>wrapper()</code>函数可以接受任意参数的调用。在<code>wrapper()</code>函数内，首先打印日志，再紧接着调用原始函数</p>
+<p>​	如果decorator本身需要传入参数，那就需要编写一个返回decorator的高阶函数，写出来会更复杂。比如，要自定义log的文本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def log(text):</span><br><span class="line">    def decorator(func):</span><br><span class="line">        def wrapper(*args, **kw):</span><br><span class="line">            print(&#x27;%s %s():&#x27; % (text, func.__name__))</span><br><span class="line">            return func(*args, **kw)</span><br><span class="line">        return wrapper</span><br><span class="line">    return decorator</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	这个3层嵌套的decorator用法如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@log(&#x27;execute&#x27;)</span><br><span class="line">def now():</span><br><span class="line">    print(&#x27;2015-3-25&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(now())</span><br><span class="line">execute now():</span><br><span class="line">2015-3-25</span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<p>​	和两层嵌套的decorator相比，3层嵌套的效果是这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">now = log(&#x27;execute&#x27;)(now)</span><br></pre></td></tr></table></figure>
+
+<p>​	我们来剖析上面的语句，首先执行<code>log(&#39;execute&#39;)</code>，返回的是<code>decorator</code>函数，再调用返回的函数，参数是<code>now</code>函数，返回值最终是<code>wrapper</code>函数。</p>
+<p>​	以上两种decorator的定义都没有问题，但还差最后一步。因为我们讲了函数也是对象，它有<code>__name__</code>等属性，但你去看经过decorator装饰之后的函数，它们的<code>__name__</code>已经从原来的<code>&#39;now&#39;</code>变成了<code>&#39;wrapper&#39;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(now.__name__)</span><br><span class="line">&#x27;wrapper&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	因为返回的那个<code>wrapper()</code>函数名字就是<code>&#39;wrapper&#39;</code>，所以，需要把原始函数的<code>__name__</code>等属性复制到<code>wrapper()</code>函数中，否则，有些依赖函数签名的代码执行就会出错。</p>
+<p>​	不需要编写<code>wrapper.__name__ = func.__name__</code>这样的代码，Python内置的<code>functools.wraps</code>就是干这个事的，所以，一个完整的decorator的写法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import functools</span><br><span class="line"></span><br><span class="line">def log(func):</span><br><span class="line">    @functools.wraps(func)</span><br><span class="line">    def wrapper(*args, **kw):</span><br><span class="line">        print(&#x27;call %s():&#x27; % func.__name__)</span><br><span class="line">        return func(*args, **kw)</span><br><span class="line">    return wrapper</span><br></pre></td></tr></table></figure>
+
+<p>​	或者针对带参数的decorato\</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import functools</span><br><span class="line"></span><br><span class="line">def log(text):</span><br><span class="line">    def decorator(func):</span><br><span class="line">        @functools.wraps(func)</span><br><span class="line">        def wrapper(*args, **kw):</span><br><span class="line">            print(&#x27;%s %s():&#x27; % (text, func.__name__))</span><br><span class="line">            return func(*args, **kw)</span><br><span class="line">        return wrapper</span><br><span class="line">    return decorator</span><br></pre></td></tr></table></figure>
+
+<p>​	<code>import functools</code>是导入<code>functools</code>模块。模块的概念稍候讲解。现在，只需记住在定义<code>wrapper()</code>的前面加上<code>@functools.wraps(func)</code>即可。</p>
+
     </div>
     
     <div class="post-footer">
@@ -386,7 +465,7 @@
             Table of Contents
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="toc-text">高阶函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%90%91%E5%87%BD%E6%95%B0"><span class="toc-text">变量可以指向函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%90%8D%E4%B9%9F%E6%98%AF%E5%8F%98%E9%87%8F"><span class="toc-text">函数名也是变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E5%85%A5%E5%87%BD%E6%95%B0"><span class="toc-text">传入函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map-x2F-reduce"><span class="toc-text">map&#x2F;reduce</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#map"><span class="toc-text">map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reduce"><span class="toc-text">reduce</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-text">filter</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8filter%E6%B1%82%E7%B4%A0%E6%95%B0"><span class="toc-text">用filter求素数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sorted%EF%BC%88%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-text">sorted（排序算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0"><span class="toc-text">返回函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-text">闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E9%97%AD%E5%8C%85%E6%97%B6%E7%89%A2%E8%AE%B0%E4%B8%80%E7%82%B9%EF%BC%9A%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0%E4%B8%8D%E8%A6%81%E5%BC%95%E7%94%A8%E4%BB%BB%E4%BD%95%E5%BE%AA%E7%8E%AF%E5%8F%98%E9%87%8F%EF%BC%8C%E6%88%96%E8%80%85%E5%90%8E%E7%BB%AD%E4%BC%9A%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F"><span class="toc-text">返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nonlocal"><span class="toc-text">nonlocal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E9%97%AD%E5%8C%85%E6%97%B6%EF%BC%8C%E5%AF%B9%E5%A4%96%E5%B1%82%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC%E5%89%8D%EF%BC%8C%E9%9C%80%E8%A6%81%E5%85%88%E4%BD%BF%E7%94%A8nonlocal%E5%A3%B0%E6%98%8E%E8%AF%A5%E5%8F%98%E9%87%8F%E4%B8%8D%E6%98%AF%E5%BD%93%E5%89%8D%E5%87%BD%E6%95%B0%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E3%80%82"><span class="toc-text">使用闭包时，对外层变量赋值前，需要先使用nonlocal声明该变量不是当前函数的局部变量。</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="toc-text">高阶函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%90%91%E5%87%BD%E6%95%B0"><span class="toc-text">变量可以指向函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%90%8D%E4%B9%9F%E6%98%AF%E5%8F%98%E9%87%8F"><span class="toc-text">函数名也是变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E5%85%A5%E5%87%BD%E6%95%B0"><span class="toc-text">传入函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map-x2F-reduce"><span class="toc-text">map&#x2F;reduce</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#map"><span class="toc-text">map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reduce"><span class="toc-text">reduce</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-text">filter</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8filter%E6%B1%82%E7%B4%A0%E6%95%B0"><span class="toc-text">用filter求素数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sorted%EF%BC%88%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-text">sorted（排序算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0"><span class="toc-text">返回函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-text">闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E9%97%AD%E5%8C%85%E6%97%B6%E7%89%A2%E8%AE%B0%E4%B8%80%E7%82%B9%EF%BC%9A%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0%E4%B8%8D%E8%A6%81%E5%BC%95%E7%94%A8%E4%BB%BB%E4%BD%95%E5%BE%AA%E7%8E%AF%E5%8F%98%E9%87%8F%EF%BC%8C%E6%88%96%E8%80%85%E5%90%8E%E7%BB%AD%E4%BC%9A%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F"><span class="toc-text">返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nonlocal"><span class="toc-text">nonlocal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0-lambda"><span class="toc-text">匿名函数   (lambda)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8%EF%BC%88Decorator%EF%BC%89"><span class="toc-text">装饰器（Decorator）</span></a></li></ol></li></ol>
         
     </div>
 </aside>

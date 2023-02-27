@@ -499,6 +499,90 @@
 <p>Flink的Checkpoint的核心算法叫做<code>Chandy-Lamport</code>，是一种分布式快照（Distributed Snapshot）算法，应用到流式系统中就是<strong>确定一个 Global 的 Snapshot</strong>，错误处理的时候各个节点根据上一次的 Global Snapshot 来恢复。</p>
 </blockquote>
 <p>​											Chandy-Lamport 算法：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53482103">https://zhuanlan.zhihu.com/p/53482103</a></p>
+<h3 id="Flink-Checkpoint之执行流程"><a href="#Flink-Checkpoint之执行流程" class="headerlink" title="Flink Checkpoint之执行流程"></a>Flink Checkpoint之执行流程</h3><p>​	Checkpoint是Flink实现容错机制最核心的功能，它能够根据配置<a href>周期性地基于Stream中各个Operator&#x2F;task的状态State来生成快照，从而将这些状态数据定期持久化存储下来，当Flink程序一旦意外崩溃时，重新运行程序时可以有选择地从这些快照进行恢复，从而修正因为故障带来的程序数据异常</a>。</p>
+<p>​	Checkpoint实现的核心就是<code>barrier（栅栏或屏障）</code>，Flink通过在数据集上<strong>间隔性</strong>的生成<strong>屏障barrier</strong>，并通过barrier将某段时间内的状态State数据保存到Checkpoint中（先快照，再保存）。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-13-37.png"></p>
+<p>下图展示Checkpoint时整体流程，简易版本</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-14-27.png"></p>
+<ol>
+<li>Flink的<code>JobManager</code>创建<code>CheckpointCoordinator</code>；</li>
+<li>Coordinator向所有的<code>SourceOperator</code>发送Barrier栅栏(理解为执行Checkpoint的信号)；</li>
+<li>SourceOperator接收到Barrier之后，暂停当前的操作(暂停的时间很短，因为后续的写快照是异步的)，并制作State快照, 然后将自己的快照保存到指定的介质中(如HDFS), 一切 ok之后向Coordinator汇报并将Barrier发送给下游的其他Operator；</li>
+<li>其他的如TransformationOperator接收到Barrier，重复第2步，最后将Barrier发送给Sink；</li>
+<li>Sink接收到Barrier之后重复第2步；</li>
+<li>Coordinator接收到所有的Operator的执行ok的汇报结果，认为本次快照执行成功；</li>
+</ol>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-15-30.png"></p>
+<p>栅栏对齐：下游subTask必须接收到上游的<strong>所有SubTask</strong>发送Barrier栅栏信号，才开始进行Checkpoint操作。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-16-24.png"></p>
+<h3 id="Flink-Checkpoint之StateBackend"><a href="#Flink-Checkpoint之StateBackend" class="headerlink" title="Flink Checkpoint之StateBackend"></a>Flink Checkpoint之StateBackend</h3><p>​	</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># StateBackend（状态后端）：</span><br><span class="line">	1、State状态存储地方：内存Memory</span><br><span class="line">	</span><br><span class="line">	2、Checkpoint检查点存储地方：Fs文件系统或Memory</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Flink 1.13之前<strong>状态后端存储，三种方式：</strong>Memory（内存）、Fs（文件系统）和RocksDB（嵌入式数据库）**。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-18-31.png"></p>
+<p>Checkpoint其实就<code>是Flink中某一时刻，所有的Operator的全局快照，那么快照应该要有一个地方进行存储</code>，而这个存储的地方叫做<strong>状态后端（StateBackend</strong>）。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-19-15.png"></p>
+<blockquote>
+<ul>
+<li>1）、<code>MemoryStateBackend</code><ul>
+<li>State存储：<strong>TaskManager</strong>内存中</li>
+<li>Checkpoint存储：<strong>JobManager</strong>内存中</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>[推荐使用的场景为：本地测试、几乎无状态的作业，比如 ETL、JobManager 不容易挂，或挂掉影响不大的情况。不推荐在生产场景使用。](</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-19-51.png"></p>
+<blockquote>
+<ul>
+<li>2）、<code>FsStateBackend</code><ul>
+<li>State存储：&#x3D;&#x3D;TaskManager&#x3D;&#x3D;内存</li>
+<li>Checkpoint存储：可靠外部存储文件系统，本地测试可以为LocalFS，&#x3D;&#x3D;测试生产HDFS&#x3D;&#x3D;</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>[推荐使用的场景为：常规使用状态的作业，例如分钟级窗口聚合或 join、需要开启HA的作业](</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-20-10.png"></p>
+<p>当Checkpoint时存储到文件系统时，设置格式</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-20-28.png"></p>
+<blockquote>
+<ul>
+<li>3）、<code>RocksDBStateBackend</code><ul>
+<li>RocksDB 是一个 嵌入式本地key&#x2F;value 内存数据库，和其他的 key&#x2F;value 一样，&#x3D;&#x3D;先将状态放到内存中，如果内存快满时，则写入到磁盘中&#x3D;&#x3D;。类似Redis内存数据库。</li>
+<li>State存储：TaskManager内存数据库（&#x3D;&#x3D;RocksDB&#x3D;&#x3D;）</li>
+<li>Checkpoint存储：外部文件系统，比如HDFS可靠文件系统中</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>[推荐使用的场景为：超大状态的作业，例如天级窗口聚合、需要开启 HA 的作业、最好是对状态读写性能要求不高的作业。](</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-20-57.png"></p>
+<p>​	在Flink 1.13之前版本，<strong>状态Stage存储和Checkpoint检查点</strong>两个功能是混在一起的，即把<strong>状态存储和检查点的创建</strong>概念笼统的混在一起，导致初学者对此部分感觉很混乱，很难理解。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-21-40.png"></p>
+<p>​	Flink 1.13 中将<code>状态State</code>和<code>检查点Checkpoint</code>两者区分开来。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-21-59.png"></p>
+<p>Checkpoint存储支持2种方式：&#x3D;&#x3D;JobManager内存和FileSystem文件系统&#x3D;&#x3D;。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-22-20.png"></p>
+<p>​	从<strong>Flink 1.13</strong>版本开始，社区重新设计了其公共状态后端类，以帮助用户更好地理解本地状态存储和检查点存储的分离。[此时StateBackend后端，分为2种情况：</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-49-17.png"></p>
+<p>Flink 1.13 中State和Checkpoint两个概念被拆开：</p>
+<ul>
+<li>State Backend 的概念变窄，只描述状态访问和存储；</li>
+<li>Checkpoint storage，描述的是 Checkpoint 行为，如 Checkpoint 数据是发回给 JM 内存还是上传到远程。</li>
+</ul>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-50-19.png"></p>
+<h3 id="Flink-Checkpoint之Savepoint-保存点"><a href="#Flink-Checkpoint之Savepoint-保存点" class="headerlink" title="Flink Checkpoint之Savepoint 保存点"></a>Flink Checkpoint之Savepoint 保存点</h3><p>Flink流式计算，提供<strong>Checkpoint机制，程序自动将State进行快速Snapshot，然后进行Checkpoint保存</strong>。此外，还支持用户可以&#x3D;&#x3D;手动进行Snapshot&#x3D;&#x3D;，保存State数据，称为：<code>SavePoint</code>保存点。</p>
+<p><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/ops/state/savepoints/">https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/ops/state/savepoints/</a></p>
+<blockquote>
+<p>[SavePoint保存点由&#x3D;&#x3D;用户&#x3D;&#x3D;手动创建、拥有和删除，它们的用例用于有计划的、手动的备份和恢复。](</p>
+</blockquote>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-54-05.png"></p>
+<p><code>Savepoint</code>：保存点，类似于以前玩游戏的时候，遇到难关&#x2F;遇到boss，赶紧手动存个档，然后接着玩，如果失败了，赶紧从上次的存档中恢复，然后接着玩。</p>
+<p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-54-33.png"></p>
+<h4 id="保存点SavePoint和检查点Checkpoint区别："><a href="#保存点SavePoint和检查点Checkpoint区别：" class="headerlink" title="保存点SavePoint和检查点Checkpoint区别："></a>保存点SavePoint和检查点Checkpoint区别：</h4><p><img src="/2023/02/26/Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/Snipaste_2023-02-27_20-54-53.png"></p>
 
     </div>
     
@@ -555,7 +639,7 @@
             Table of Contents
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3%EF%BC%88Checkpoint%E3%80%81State%E3%80%81Time%E3%80%81Window%EF%BC%89"><span class="toc-text">Flink_四大基石（Checkpoint、State、Time、Window）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3-Window"><span class="toc-text">窗口 Window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4-Time"><span class="toc-text">时间 Time</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81-State"><span class="toc-text">状态 State</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%82%B9-Checkpoint"><span class="toc-text">检查点 Checkpoint</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Window"><span class="toc-text">Flink Window</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Window-%E7%AA%97%E5%8F%A3%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">Flink Window 窗口的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Window%E4%B9%8BWindow-%E7%B1%BB%E5%9E%8B"><span class="toc-text">Flink Window之Window 类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Time"><span class="toc-text">Flink Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%B1%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BWatermark"><span class="toc-text">乱序数据处理之Watermark</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Watermark%E6%B0%B4%E4%BD%8D%E7%BA%BF%E5%AE%9A%E4%B9%89"><span class="toc-text">Watermark水位线定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Watermaek-%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97"><span class="toc-text">Watermaek 如何计算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BAllowed-Lateness"><span class="toc-text">延迟数据处理之Allowed Lateness</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BSide-Output"><span class="toc-text">延迟数据处理之Side Output</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81State"><span class="toc-text">状态State</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-State-%E7%8A%B6%E6%80%81"><span class="toc-text">Flink State 状态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Flink-State%E4%B9%8B%E7%8A%B6%E6%80%81%E5%8F%8A%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">Flink State之状态及存储结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-State%E4%B9%8B%E7%8A%B6%E6%80%81%E5%88%86%E7%B1%BB"><span class="toc-text">Flink State之状态分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyed-State-%EF%BC%9A%E9%94%AE%E6%8E%A7%E7%8A%B6%E6%80%81"><span class="toc-text">Keyed State]()：键控状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-State%EF%BC%9A%E7%AE%97%E5%AD%90%E7%8A%B6%E6%80%81"><span class="toc-text">Operator State：算子状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%8A%B6%E6%80%81%EF%BC%9A-x3D-x3D-Keyed-State%E4%B8%8EOperator-State-x3D-x3D-%EF%BC%8C%E6%AF%94%E8%BE%83%E5%A6%82%E4%B8%8B"><span class="toc-text">两种不同类型状态：&#x3D;&#x3D;Keyed State与Operator State&#x3D;&#x3D;，比较如下</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Checkpoint-%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="toc-text">Flink Checkpoint 检查点</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Flink-%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3%EF%BC%88Checkpoint%E3%80%81State%E3%80%81Time%E3%80%81Window%EF%BC%89"><span class="toc-text">Flink_四大基石（Checkpoint、State、Time、Window）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3-Window"><span class="toc-text">窗口 Window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4-Time"><span class="toc-text">时间 Time</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81-State"><span class="toc-text">状态 State</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%82%B9-Checkpoint"><span class="toc-text">检查点 Checkpoint</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Window"><span class="toc-text">Flink Window</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Window-%E7%AA%97%E5%8F%A3%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">Flink Window 窗口的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Window%E4%B9%8BWindow-%E7%B1%BB%E5%9E%8B"><span class="toc-text">Flink Window之Window 类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Time"><span class="toc-text">Flink Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%B1%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BWatermark"><span class="toc-text">乱序数据处理之Watermark</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Watermark%E6%B0%B4%E4%BD%8D%E7%BA%BF%E5%AE%9A%E4%B9%89"><span class="toc-text">Watermark水位线定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Watermaek-%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97"><span class="toc-text">Watermaek 如何计算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BAllowed-Lateness"><span class="toc-text">延迟数据处理之Allowed Lateness</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B9%8BSide-Output"><span class="toc-text">延迟数据处理之Side Output</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81State"><span class="toc-text">状态State</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-State-%E7%8A%B6%E6%80%81"><span class="toc-text">Flink State 状态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Flink-State%E4%B9%8B%E7%8A%B6%E6%80%81%E5%8F%8A%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">Flink State之状态及存储结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-State%E4%B9%8B%E7%8A%B6%E6%80%81%E5%88%86%E7%B1%BB"><span class="toc-text">Flink State之状态分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyed-State-%EF%BC%9A%E9%94%AE%E6%8E%A7%E7%8A%B6%E6%80%81"><span class="toc-text">Keyed State]()：键控状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-State%EF%BC%9A%E7%AE%97%E5%AD%90%E7%8A%B6%E6%80%81"><span class="toc-text">Operator State：算子状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%8A%B6%E6%80%81%EF%BC%9A-x3D-x3D-Keyed-State%E4%B8%8EOperator-State-x3D-x3D-%EF%BC%8C%E6%AF%94%E8%BE%83%E5%A6%82%E4%B8%8B"><span class="toc-text">两种不同类型状态：&#x3D;&#x3D;Keyed State与Operator State&#x3D;&#x3D;，比较如下</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-Checkpoint-%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="toc-text">Flink Checkpoint 检查点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Checkpoint%E4%B9%8B%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">Flink Checkpoint之执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Checkpoint%E4%B9%8BStateBackend"><span class="toc-text">Flink Checkpoint之StateBackend</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flink-Checkpoint%E4%B9%8BSavepoint-%E4%BF%9D%E5%AD%98%E7%82%B9"><span class="toc-text">Flink Checkpoint之Savepoint 保存点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E7%82%B9SavePoint%E5%92%8C%E6%A3%80%E6%9F%A5%E7%82%B9Checkpoint%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-text">保存点SavePoint和检查点Checkpoint区别：</span></a></li></ol></li></ol></li></ol></li></ol>
         
     </div>
 </aside>
