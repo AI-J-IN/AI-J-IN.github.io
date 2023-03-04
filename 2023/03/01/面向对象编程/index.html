@@ -358,23 +358,199 @@
 <p>但是等等，试试：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> print(isinstance(c, Animal))</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
 
+<p>​	看来<code>c</code>不仅仅是<code>Dog</code>，<code>c</code>还是<code>Animal</code>！</p>
+<p>不过仔细想想，这是有道理的，因为<code>Dog</code>是从<code>Animal</code>继承下来的，当我们创建了一个<code>Dog</code>的实例<code>c</code>时，我们认为<code>c</code>的数据类型是<code>Dog</code>没错，但<code>c</code>同时也是<code>Animal</code>也没错，<code>Dog</code>本来就是<code>Animal</code>的一种！</p>
+<p>所以，在继承关系中，如果一个实例的数据类型是某个子类，那它的数据类型也可以被看做是父类。但是，反过来就不行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> b = Animal()</span><br><span class="line">print(isinstance(b, Dog)) </span><br><span class="line">False</span><br></pre></td></tr></table></figure>
 
 
 
+<p>​	<code>Dog</code>可以看成<code>Animal</code>，但<code>Animal</code>不可以看成<code>Dog</code>。</p>
+<p>要理解多态的好处，我们还需要再编写一个函数，这个函数接受一个<code>Animal</code>类型的变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def run_twice(animal):</span><br><span class="line">    animal.run()</span><br><span class="line">    animal.run()</span><br></pre></td></tr></table></figure>
 
 
 
+<p>​	当我们传入<code>Animal</code>的实例时，<code>run_twice()</code>就打印出：	</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(run_twice(Animal())) </span><br><span class="line">Animal is running...</span><br><span class="line">Animal is running...</span><br></pre></td></tr></table></figure>
 
 
 
+<p>​	当我们传入<code>Dog</code>的实例时，<code>run_twice()</code>就打印出：ss</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(run_twice(Dog())) </span><br><span class="line">Dog is running...</span><br><span class="line">Dog is running...</span><br></pre></td></tr></table></figure>
 
 
 
+<p>​	当我们传入<code>Cat</code>的实例时，<code>run_twice()</code>就打印出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(run_twice(Cat())) </span><br><span class="line">Cat is running...</span><br><span class="line">Cat is running...</span><br></pre></td></tr></table></figure>
 
 
 
+<p>​	看上去没啥意思，但是仔细想想，现在，如果我们再定义一个<code>Tortoise</code>类型，也从<code>Animal</code>派生：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Tortoise(Animal):</span><br><span class="line">    def run(self):</span><br><span class="line">        print(&#x27;Tortoise is running slowly...&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>​	当我们调用<code>run_twice()</code>时，传入<code>Tortoise</code>的实例：	</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(run_twice(Tortoise())) </span><br><span class="line">Tortoise is running slowly...</span><br><span class="line">Tortoise is running slowly...</span><br></pre></td></tr></table></figure>
 
 
+
+<p>​	你会发现，新增一个<code>Animal</code>的子类，不必对<code>run_twice()</code>做任何修改，实际上，任何依赖<code>Animal</code>作为参数的函数或者方法都可以不加修改地正常运行，原因就在于多态。</p>
+<p>​	多态的好处就是，当我们需要传入<code>Dog</code>、<code>Cat</code>、<code>Tortoise</code>……时，我们只需要接收<code>Animal</code>类型就可以了，因为<code>Dog</code>、<code>Cat</code>、<code>Tortoise</code>……都是<code>Animal</code>类型，然后，按照<code>Animal</code>类型进行操作即可。由于<code>Animal</code>类型有<code>run()</code>方法，因此，传入的任意类型，只要是<code>Animal</code>类或者子类，就会自动调用实际类型的<code>run()</code>方法，这就是多态的意思：</p>
+<p>对于一个变量，我们只需要知道它是<code>Animal</code>类型，无需确切地知道它的子类型，就可以放心地调用<code>run()</code>方法，而具体调用的<code>run()</code>方法是作用在<code>Animal</code>、<code>Dog</code>、<code>Cat</code>还是<code>Tortoise</code>对象上，由运行时该对象的确切类型决定，这就是多态真正的威力：调用方只管调用，不管细节，而当我们新增一种<code>Animal</code>的子类时，只要确保<code>run()</code>方法编写正确，不用管原来的代码是如何调用的。这就是著名的“开闭”原则：</p>
+<p>​	对扩展开放：允许新增<code>Animal</code>子类；</p>
+<p>对修改封闭：不需要修改依赖<code>Animal</code>类型的<code>run_twice()</code>等函数。</p>
+<p>继承还可以一级一级地继承下来，就好比从爷爷到爸爸、再到儿子这样的关系。而任何类，最终都可以追溯到根类object，这些继承关系看上去就像一颗倒着的树。比如如下的继承树：</p>
+<p><img src="/2023/03/01/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/Snipaste_2023-03-02_19-23-54.png"></p>
+<h3 id="静态语言-vs-动态语言"><a href="#静态语言-vs-动态语言" class="headerlink" title="静态语言 vs 动态语言"></a>静态语言 vs 动态语言</h3><p>对于静态语言（例如Java）来说，如果需要传入<code>Animal</code>类型，则传入的对象必须是<code>Animal</code>类型或者它的子类，否则，将无法调用<code>run()</code>方法。</p>
+<p>对于Python这样的动态语言来说，则不一定需要传入<code>Animal</code>类型。我们只需要保证传入的对象有一个<code>run()</code>方法就可以了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Timer(object):</span><br><span class="line">    def run(self):</span><br><span class="line">        print(&#x27;Start...&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>​	这就是动态语言的“鸭子类型”，它并不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。</p>
+<p>Python的“file-like object“就是一种鸭子类型。对真正的文件对象，它有一个<code>read()</code>方法，返回其内容。但是，许多对象，只要有<code>read()</code>方法，都被视为“file-like object“。许多函数接收的参数就是“file-like object“，你不一定要传入真正的文件对象，完全可以传入任何实现了<code>read()</code>方法的对象。</p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>继承可以把父类的所有功能都直接拿过来，这样就不必重零做起，子类只需要新增自己特有的方法，也可以把父类不适合的方法覆盖重写。</p>
+<p>动态语言的鸭子类型特点决定了继承不像静态语言那样是必须的。</p>
+<h2 id="获取对象信息"><a href="#获取对象信息" class="headerlink" title="获取对象信息"></a>获取对象信息</h2><p>​	当我们拿到一个对象的引用时，如何知道这个对象是什么类型、有哪些方法呢</p>
+<h3 id="使用type"><a href="#使用type" class="headerlink" title="使用type()"></a>使用type()</h3><p>​	首先，我们来判断对象类型，使用<code>type()</code>函数：</p>
+<p>基本类型都可以用<code>type()</code>判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> print(type(123))</span><br><span class="line">&lt;class &#x27;int&#x27;&gt;</span><br><span class="line">  print(type(&#x27;str&#x27;))</span><br><span class="line">&lt;class &#x27;str&#x27;&gt;</span><br><span class="line">  print(type(None))</span><br><span class="line">&lt;type(None) &#x27;NoneType&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​	如果一个变量指向函数或者类，也可以用<code>type()</code>判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> print( type(abs))</span><br><span class="line">&lt;class &#x27;builtin_function_or_method&#x27;&gt;</span><br><span class="line"> print( type(a))</span><br><span class="line">&lt;class &#x27;__main__.Animal&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	但是<code>type()</code>函数返回的是什么类型呢？它返回对应的Class类型。如果我们要在<code>if</code>语句中判断，就需要比较两个变量的type类型是否相同：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> print( type(123)==type(456))</span><br><span class="line">True</span><br><span class="line">  print(type(123)==int)</span><br><span class="line">True</span><br><span class="line">  print(type(&#x27;abc&#x27;)==type(&#x27;123&#x27;))</span><br><span class="line">True</span><br><span class="line"> print( type(&#x27;abc&#x27;)==str)</span><br><span class="line">True</span><br><span class="line">  print(type(&#x27;abc&#x27;)==type(123))</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	判断基本数据类型可以直接写<code>int</code>，<code>str</code>等，但如果要判断一个对象是否是函数怎么办？可以使用<code>types</code>模块中定义的常量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> import types</span><br><span class="line"> def fn():</span><br><span class="line">...     pass</span><br><span class="line">...</span><br><span class="line">  print(type(fn)==types.FunctionType)</span><br><span class="line">True</span><br><span class="line">  print(type(abs)==types.BuiltinFunctionType)</span><br><span class="line">True</span><br><span class="line">  print(type(lambda x: x)==types.LambdaType)</span><br><span class="line">True</span><br><span class="line">  print(type((x for x in range(10)))==types.GeneratorType)</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用isinstance"><a href="#使用isinstance" class="headerlink" title="使用isinstance()"></a>使用isinstance()</h3><p>​	对于class的继承关系来说，使用<code>type()</code>就很不方便。我们要判断class的类型，可以使用<code>isinstance()</code>函数。</p>
+<p>我们回顾上次的例子，如果继承关系是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">object -&gt; Animal -&gt; Dog -&gt; Husky</span><br></pre></td></tr></table></figure>
+
+<p>​	那么，<code>isinstance()</code>就可以告诉我们，一个对象是否是某种类型。先创建3种类型的对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = Animal()</span><br><span class="line">d = Dog()</span><br><span class="line">h = Husky()</span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<p>​	然后，判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(isinstance(h, Husky)) </span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	没有问题，因为<code>h</code>变量指向的就是Husky对象。</p>
+<p>再判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(isinstance(h, Dog)) </span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	<code>h</code>虽然自身是Husky类型，但由于Husky是从Dog继承下来的，所以，<code>h</code>也还是Dog类型。换句话说，<code>isinstance()</code>判断的是一个对象是否是该类型本身，或者位于该类型的父继承链上。</p>
+<p>因此，我们可以确信，<code>h</code>还是Animal类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print( isinstance(h, Animal))</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	同理，实际类型是Dog的<code>d</code>也是Animal类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(isinstance(d, Dog) and isinstance(d, Animal)) </span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	但是，<code>d</code>不是Husky类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print( isinstance(d, Husky))</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	能用<code>type()</code>判断的基本类型也可以用<code>isinstance()</code>判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> print(isinstance(&#x27;a&#x27;, str))</span><br><span class="line">True</span><br><span class="line">print( isinstance(123, int))</span><br><span class="line">True</span><br><span class="line"> print(isinstance(b&#x27;a&#x27;, bytes))</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	并且还可以判断一个变量是否是某些类型中的一种，比如下面的代码就可以判断是否是list或者tuple：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(isinstance([1, 2, 3], (list, tuple))) </span><br><span class="line">True</span><br><span class="line">print(isinstance((1, 2, 3), (list, tuple))) </span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="x3D-x3D-总是优先使用isinstance-判断类型，可以将指定类型及其子类“一网打尽”。-x3D-x3D"><a href="#x3D-x3D-总是优先使用isinstance-判断类型，可以将指定类型及其子类“一网打尽”。-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;总是优先使用isinstance()判断类型，可以将指定类型及其子类“一网打尽”。&#x3D;&#x3D;"></a>&#x3D;&#x3D;总是优先使用isinstance()判断类型，可以将指定类型及其子类“一网打尽”。&#x3D;&#x3D;</h3><h3 id="使用dir"><a href="#使用dir" class="headerlink" title="使用dir()"></a>使用dir()</h3><p>​	如果要获得一个对象的所有属性和方法，可以使用<code>dir()</code>函数，它返回一个包含字符串的list，比如，获得一个str对象的所有属性和方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(dir(&#x27;ABC&#x27;)) </span><br><span class="line">[&#x27;__add__&#x27;, &#x27;__class__&#x27;,..., &#x27;__subclasshook__&#x27;, &#x27;capitalize&#x27;, &#x27;casefold&#x27;,..., &#x27;zfill&#x27;]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	类似<code>__xxx__</code>的属性和方法在Python中都是有特殊用途的，比如<code>__len__</code>方法返回长度。在Python中，如果你调用<code>len()</code>函数试图获取一个对象的长度，实际上，在<code>len()</code>函数内部，它自动去调用该对象的<code>__len__()</code>方法，所以，下面的代码是等价的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(len(&#x27;ABC&#x27;)) </span><br><span class="line">3</span><br><span class="line">print(&#x27;ABC&#x27;.__len__()) </span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	我们自己写的类，如果也想用<code>len(myObj)</code>的话，就自己写一个<code>__len__()</code>方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> class MyDog(object):</span><br><span class="line">...     def __len__(self):</span><br><span class="line">...         return 100</span><br><span class="line">...</span><br><span class="line"> print(dog = MyDog())</span><br><span class="line"> print(len(dog))</span><br><span class="line">100</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	剩下的都是普通属性或方法，比如<code>lower()</code>返回小写的字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(&#x27;ABC&#x27;.lower()) </span><br><span class="line">&#x27;abc&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	仅仅把属性和方法列出来是不够的，配合<code>getattr()</code>、<code>setattr()</code>以及<code>hasattr()</code>，我们可以直接操作一个对象的状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> class MyObject(object):</span><br><span class="line">     def __init__(self):</span><br><span class="line">         self.x = 9</span><br><span class="line">     def power(self):</span><br><span class="line">        return self.x * self.x</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; obj = MyObject()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	紧接着，可以测试该对象的属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">print(hasattr(obj, &#x27;x&#x27;))  # 有属性&#x27;x&#x27;吗？</span><br><span class="line">True</span><br><span class="line"> obj.x</span><br><span class="line">9</span><br><span class="line">print( hasattr(obj, &#x27;y&#x27;)) # 有属性&#x27;y&#x27;吗？</span><br><span class="line">False</span><br><span class="line"> print(setattr(obj, &#x27;y&#x27;, 19)) # 设置一个属性&#x27;y&#x27;</span><br><span class="line"> print(hasattr(obj, &#x27;y&#x27;)) # 有属性&#x27;y&#x27;吗？</span><br><span class="line">True</span><br><span class="line"> print(getattr(obj, &#x27;y&#x27;)) # 获取属性&#x27;y&#x27;</span><br><span class="line">19</span><br><span class="line">print( obj.y) # 获取属性&#x27;y&#x27;</span><br><span class="line">19</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	如果试图获取不存在的属性，会抛出AttributeError的错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print( getattr(obj, &#x27;z&#x27;)) # 获取属性&#x27;z&#x27;</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">AttributeError: &#x27;MyObject&#x27; object has no attribute &#x27;z&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	可以传入一个default参数，如果属性不存在，就返回默认值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(getattr(obj, &#x27;z&#x27;, 404))  # 获取属性&#x27;z&#x27;，如果不存在，返回默认值404</span><br><span class="line">404</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	也可以获得对象的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> print(hasattr(obj, &#x27;power&#x27;)) # 有方法&#x27;power&#x27;吗？</span><br><span class="line">True</span><br><span class="line">  print(getattr(obj, &#x27;power&#x27;)) # 获取方法&#x27;power&#x27;</span><br><span class="line">&lt;bound method MyObject.power of &lt;__main__.MyObject object at 0x10077a6a0&gt;&gt;</span><br><span class="line"> fn = getattr(obj, &#x27;power&#x27;) # 获取方法&#x27;power&#x27;并赋值到变量fn</span><br><span class="line"> print( fn) # fn指向obj.power</span><br><span class="line">&lt;bound method MyObject.power of &lt;__main__.MyObject object at 0x10077a6a0&gt;&gt;</span><br><span class="line"> print( fn()) # 调用fn()与调用obj.power()是一样的</span><br><span class="line">81</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>​	通过内置的一系列函数，我们可以对任意一个Python对象进行剖析，拿到其内部的数据。要注意的是，只有在不知道对象信息的时候，我们才会去获取对象信息。如果可以直接写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sum = obj.x + obj.y</span><br></pre></td></tr></table></figure>
+
+<p>​	就不要写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sum = getattr(obj, &#x27;x&#x27;) + getattr(obj, &#x27;y&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<p>​	一个正确的用法的例子如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def readImage(fp):</span><br><span class="line">    if hasattr(fp, &#x27;read&#x27;):</span><br><span class="line">        return readData(fp)</span><br><span class="line">    return None</span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<p>​	请注意，在Python这类动态语言中，根据鸭子类型，有<code>read()</code>方法，不代表该fp对象就是一个文件流，它也可能是网络流，也可能是内存中的一个字节流，但只要<code>read()</code>方法返回的是有效的图像数据，就不影响读取图像的功能。</p>
+<h3 id="实例属性和类属性"><a href="#实例属性和类属性" class="headerlink" title="实例属性和类属性"></a>实例属性和类属性</h3><p>​	由于Python是动态语言，根据类创建的实例可以任意绑定属性。</p>
+<p>给实例绑定属性的方法是通过实例变量，或者通过<code>self</code>变量：	</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">s = Student(&#x27;Bob&#x27;)</span><br><span class="line">s.score = 90</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	但是，如果<code>Student</code>类本身需要绑定一个属性呢？可以直接在class中定义属性，这种属性是类属性，归<code>Student</code>类所有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    name = &#x27;Student&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	当我们定义了一个类属性后，这个属性虽然归类所有，但类的所有实例都可以访问到。来测试一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> class Student(object):</span><br><span class="line">...     name = &#x27;Student&#x27;</span><br><span class="line">...</span><br><span class="line"> s = Student() # 创建实例s</span><br><span class="line"> print(s.name) # 打印name属性，因为实例并没有name属性，所以会继续查找class的name属性</span><br><span class="line">Student</span><br><span class="line"> print(Student.name) # 打印类的name属性</span><br><span class="line">Student</span><br><span class="line"> s.name = &#x27;Michael&#x27; # 给实例绑定name属性</span><br><span class="line"> print(s.name) # 由于实例属性优先级比类属性高，因此，它会屏蔽掉类的name属性</span><br><span class="line">Michael</span><br><span class="line"> print(Student.name) # 但是类属性并未消失，用Student.name仍然可以访问</span><br><span class="line">Student</span><br><span class="line"> del s.name # 如果删除实例的name属性</span><br><span class="line"> print(s.name) # 再次调用s.name，由于实例的name属性没有找到，类的name属性就显示出来了</span><br><span class="line">Student</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	从上面的例子可以看出，在编写程序的时候，千万不要对实例属性和类属性使用相同的名字，因为相同名称的实例属性将屏蔽掉类属性，但是当你删除实例属性后，再使用相同的名称，访问到的将是类属性。</p>
+<h2 id><a href="#" class="headerlink" title></a></h2>
     </div>
     
     <div class="post-footer">
@@ -430,7 +606,7 @@
             Table of Contents
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B"><span class="toc-text">面向对象编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%92%8C%E5%AE%9E%E4%BE%8B"><span class="toc-text">类和实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85"><span class="toc-text">数据封装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6"><span class="toc-text">访问限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#private-%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7"><span class="toc-text">private (私有属性)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81"><span class="toc-text">继承和多态</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B"><span class="toc-text">面向对象编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%92%8C%E5%AE%9E%E4%BE%8B"><span class="toc-text">类和实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85"><span class="toc-text">数据封装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6"><span class="toc-text">访问限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#private-%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7"><span class="toc-text">private (私有属性)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81"><span class="toc-text">继承和多态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%AF%AD%E8%A8%80-vs-%E5%8A%A8%E6%80%81%E8%AF%AD%E8%A8%80"><span class="toc-text">静态语言 vs 动态语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%AF%B9%E8%B1%A1%E4%BF%A1%E6%81%AF"><span class="toc-text">获取对象信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8type"><span class="toc-text">使用type()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8isinstance"><span class="toc-text">使用isinstance()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x3D-x3D-%E6%80%BB%E6%98%AF%E4%BC%98%E5%85%88%E4%BD%BF%E7%94%A8isinstance-%E5%88%A4%E6%96%AD%E7%B1%BB%E5%9E%8B%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%B0%86%E6%8C%87%E5%AE%9A%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AD%90%E7%B1%BB%E2%80%9C%E4%B8%80%E7%BD%91%E6%89%93%E5%B0%BD%E2%80%9D%E3%80%82-x3D-x3D"><span class="toc-text">&#x3D;&#x3D;总是优先使用isinstance()判断类型，可以将指定类型及其子类“一网打尽”。&#x3D;&#x3D;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8dir"><span class="toc-text">使用dir()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7%E5%92%8C%E7%B1%BB%E5%B1%9E%E6%80%A7"><span class="toc-text">实例属性和类属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li></ol>
         
     </div>
 </aside>
