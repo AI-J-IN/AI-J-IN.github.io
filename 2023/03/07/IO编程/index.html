@@ -364,6 +364,7 @@
 
 <p>打印出的是反序列化的<code>Student</code>实例对象。</p>
 <h2 id="操作文件和目录"><a href="#操作文件和目录" class="headerlink" title="操作文件和目录"></a>操作文件和目录</h2><p><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017623135437088">操作文件和目录 - 廖雪峰的官方网站 (liaoxuefeng.com)</a></p>
+<h2 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h2><p><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017959540289152">异步IO - 廖雪峰的官方网站 (liaoxuefeng.com)</a></p>
 
     </div>
     
@@ -381,6 +382,12 @@
     </div>
 </article>
 <div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2023/03/08/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" class="pre-post btn btn-default" title='进程和线程'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            进程和线程</span>
+    </a>
     
     
     <a href="/2023/03/07/%E9%94%99%E8%AF%AF%E3%80%81%E8%B0%83%E8%AF%95%E5%92%8C%E6%B5%8B%E8%AF%95/" class="next-post btn btn-default" title='错误、调试和测试'>
@@ -420,7 +427,7 @@
             Table of Contents
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IO%E7%BC%96%E7%A8%8B"><span class="toc-text">IO编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="toc-text">文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E6%96%87%E4%BB%B6"><span class="toc-text">读文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#file-like-Object"><span class="toc-text">file-like Object</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-text">二进制文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">字符编码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E6%96%87%E4%BB%B6"><span class="toc-text">写文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StringIO%E5%92%8CBytesIO"><span class="toc-text">StringIO和BytesIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#StringIO"><span class="toc-text">StringIO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BytesIO"><span class="toc-text">BytesIO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-text">JSON</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON%E8%BF%9B%E9%98%B6"><span class="toc-text">JSON进阶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="toc-text">操作文件和目录</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IO%E7%BC%96%E7%A8%8B"><span class="toc-text">IO编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="toc-text">文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E6%96%87%E4%BB%B6"><span class="toc-text">读文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#file-like-Object"><span class="toc-text">file-like Object</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-text">二进制文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">字符编码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E6%96%87%E4%BB%B6"><span class="toc-text">写文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StringIO%E5%92%8CBytesIO"><span class="toc-text">StringIO和BytesIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#StringIO"><span class="toc-text">StringIO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BytesIO"><span class="toc-text">BytesIO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-text">JSON</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON%E8%BF%9B%E9%98%B6"><span class="toc-text">JSON进阶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="toc-text">操作文件和目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5IO"><span class="toc-text">异步IO</span></a></li></ol></li></ol>
         
     </div>
 </aside>
