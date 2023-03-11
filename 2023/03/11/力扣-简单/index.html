@@ -214,7 +214,79 @@
 
 
 
-<h3 id="排序-双指针"><a href="#排序-双指针" class="headerlink" title="排序+双指针"></a>排序+双指针</h3><h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3>
+<h3 id="排序-双指针"><a href="#排序-双指针" class="headerlink" title="排序+双指针"></a>排序+双指针</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:</span><br><span class="line">        tmp=nums.copy()</span><br><span class="line">        tmp.sort()</span><br><span class="line">        i=0</span><br><span class="line">        j=len(nums)-1</span><br><span class="line">        while i&lt;j:</span><br><span class="line">            if  (tmp[i]+tmp[j])&gt;target:</span><br><span class="line">                j=j-1</span><br><span class="line">            elif (tmp[i]+tmp[j])&lt;target:</span><br><span class="line">                i=i+1</span><br><span class="line">            else:</span><br><span class="line">                break</span><br><span class="line">        </span><br><span class="line">        p=nums.index(tmp[i])</span><br><span class="line">        nums.pop(p)</span><br><span class="line">        # nums[p]=123</span><br><span class="line">        k=nums.index(tmp[j])</span><br><span class="line">        if k&gt;=p:</span><br><span class="line">            k=k+1</span><br><span class="line">        return [p,k]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	因为 nums里面的数据是无序的，所以我们需要使用copy()，复制一个tmp出来，并使用 sort 进行排序。</p>
+<p>​	这里要创建两个变量 i  和 j ，从tmp的两头往中间靠拢，也就是所谓的 双指针，所以可以写个 while i&lt;j </p>
+<p>因为i 一定是要比 j 小的，否则取的数就会重复，</p>
+<p>​	tmp里的数据都是从小到大排序的,所以</p>
+<p>​	(tmp[i]+tmp[j])&gt;target 时说明 加起来的 数值太大了，需要减少，所以 需要移动 j 往中间靠拢一个位置，即  j&#x3D;j-1。</p>
+<p>​	(tmp[i]+tmp[j])&lt;target 时说明 加起来的 数值太小了，需要增加，所以 需要移动 i 往中间靠拢一个位置，即i&#x3D;i+1, </p>
+<p>​	.如此循环，直到 (tmp[i]+tmp[j])&#x3D;&#x3D;target，即 结束循环，表示已经拿到了想要的数据的</p>
+<p>​	 p&#x3D;nums.index(tmp[i]) 即获得 对于 tmp[i]的下标</p>
+<p>​	 k&#x3D;nums.index(tmp[j]) 即获得 对于 tmp[j的下标</p>
+<p>​	为啥 中间会有个  nums.pop(p) 这个代码，还是那个问题  nums&#x3D;[3,3] ，target&#x3D;6,  return 的结果就是 [0.0]，而不是[0.1]，所以为了解决这个问题，就可以使用 pop 将这个 下标 对应的数值删掉，这样就会导致 nums的长度 会减少，下标p后面的索引 都会跟着 减 1，</p>
+<p>​	if k&gt;&#x3D;p:   k&#x3D;k+1，是为了防止，p的数值删除，如果影响到了 k这个下标，即k在p的右边，就需要将 将k 进行+1，来返回实际上 nums中 k这个下标。</p>
+<pre><code> 上面我们也说过 如何 通过index 去取下标时，能避开已经 得到的下标，从而去取后续的下标，即nums[p]=123，就可以不需要代码  if k&gt;=p:   k=k+1 了
+</code></pre>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:</span><br><span class="line">        hashset=&#123;&#125;</span><br><span class="line">        for i in range(len(nums)):</span><br><span class="line">            if hashset.get(target-nums[i]) is not None :</span><br><span class="line">                return [hashset.get(target-nums[i]),i]</span><br><span class="line">            hashset[nums[i]]=i</span><br></pre></td></tr></table></figure>
+
+
+
+<p>首先创建一个 hashset 变量的字典，然后去循环每次循环 去判断  target-nums[i] 的数值是否在 hashset里面，如果不在</p>
+<p>就 hashset[nums[i]]&#x3D;i 即添加 一个  key为 nums[i]  的数值，value 为 i 的下标，</p>
+<p>直到  target-nums[i] 的数值在  hashset里，就返回对应 的 下标即 hashset.get(target-nums[i]),i，</p>
+<h2 id="回文数"><a href="#回文数" class="headerlink" title="回文数"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/palindrome-number/">回文数</a></h2><p><img src="/2023/03/11/%E5%8A%9B%E6%89%A3-%E7%AE%80%E5%8D%95/Snipaste_2023-03-11_13-36-25.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def isPalindrome(self, x: int) -&gt; bool:</span><br><span class="line">        a = str(x)</span><br><span class="line">        i=0</span><br><span class="line">        j=len(a)-1</span><br><span class="line">        while i&lt;j:</span><br><span class="line">            if  a[i]==a[j]:</span><br><span class="line">                i=i+1</span><br><span class="line">                j=j-1</span><br><span class="line">            else:</span><br><span class="line">                return False </span><br><span class="line">                break</span><br><span class="line">        return True</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>将 x 的数据类型转化 为 字符串类型，然后使用双指针去依次判断，如果不相等就直接 返回 False 结束循环，如果想等就一直循环，直到条件 i&lt;j 不满足，则返回 True,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">     def isPalindrome(self, x: int) -&gt; bool:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        只反转后面一半的数字!!(节省一半的时间)</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        if x &lt; 0 or (x!=0 and x%10==0):</span><br><span class="line">            return False</span><br><span class="line">        elif x == 0:</span><br><span class="line">            return True</span><br><span class="line">        else:</span><br><span class="line">            reverse_x = 0</span><br><span class="line">            while x &gt; reverse_x:</span><br><span class="line">                remainder = x % 10</span><br><span class="line">                reverse_x = reverse_x * 10 + remainder</span><br><span class="line">                x = x // 10</span><br><span class="line">            # 当x为奇数时, 只要满足 reverse_x//10 == x 即可</span><br><span class="line">            if reverse_x == x or reverse_x//10 == x:</span><br><span class="line">                return True</span><br><span class="line">            else:</span><br><span class="line">                return False</span><br></pre></td></tr></table></figure>
+
+
+
+<p>首先要 排除一些特殊的情况 比如 x&#x3D;负数  x&#x3D; 10 x&#x3D;0的情况，</p>
+<p>然后开始计算  循环条件是  x &gt; reverse_x，</p>
+<p>  remainder &#x3D; x % 10 得到的是 x%10的余数</p>
+<p>reverse_x &#x3D; reverse_x * 10 + remainder  得到的是 x 从右往左的数据 ，（比如 x&#x3D; 12345，那reverse_x 得到的就是 54，比如 x&#x3D; 1234321，那reverse_x 得到的就是 1234）.</p>
+<p>x &#x3D; x &#x2F;&#x2F; 10 则得到的是 每次 循环 x 都要 除于10 的结果，所以 x最终的值就是 x 除以 （10乘上循环的次数）</p>
+<p>当条件不满足的时候</p>
+<p>就需要判断 如果x是偶数 则只需要判断 x 是否等于 reverse_x（比如 x的原来值是 12344321，经过计算后 x为 1234   reverse_x 为 1234 ）</p>
+<p>如果x是奇数，则需要先将reverse_x 除以10的结果跟 x 去判断 （比如 x的原来值是 1234321，经过计算后 x为 123   reverse_x 为 1234 ）</p>
+<p>则返回结果</p>
+<h2 id><a href="#" class="headerlink" title></a></h2><h2 id="罗马数字转整数"><a href="#罗马数字转整数" class="headerlink" title=" 罗马数字转整数"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/roman-to-integer/"> 罗马数字转整数</a></h2><p><img src="/2023/03/11/%E5%8A%9B%E6%89%A3-%E7%AE%80%E5%8D%95/Snipaste_2023-03-11_17-43-30.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def romanToInt(self, s: str) -&gt; int:</span><br><span class="line">        d = &#123;&#x27;I&#x27;: 1, &#x27;IV&#x27;: 4, &#x27;V&#x27;: 5, &#x27;IX&#x27;: 9, &#x27;X&#x27;: 10, &#x27;XL&#x27;: 40, &#x27;L&#x27;: 50, &#x27;XC&#x27;: 90,  &#x27;C&#x27;: 100, &#x27;CD&#x27;: 400, &#x27;D&#x27;: 500, &#x27;CM&#x27;: 900, &#x27;M&#x27;: 1000&#125;</span><br><span class="line">        i=0</span><br><span class="line">        j=0</span><br><span class="line">        while i&lt;len(s):</span><br><span class="line">            #查看当前位和下一位的字符</span><br><span class="line">            a=s[i:i+2]</span><br><span class="line">             #如果当前位置是特殊情况，那么返回其在字典中对应值，并且下一次从特殊字符之后一位开始索引</span><br><span class="line">            if a in d :</span><br><span class="line">                j+=d.get(s[i:i+2])</span><br><span class="line">                i+=2</span><br><span class="line">                 #如果当前位不是特殊情况，那么只返回当前位的数值</span><br><span class="line">            else :</span><br><span class="line">                j+=d.get(s[i])</span><br><span class="line">                i+=1</span><br><span class="line">        return j</span><br></pre></td></tr></table></figure>
+
+
+
+<p>首先我们先创建一个字典，将一些特殊情况包含进来，即</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。</span><br><span class="line">X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。 </span><br><span class="line">C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。</span><br></pre></td></tr></table></figure>
+
+<p>然后我们创建2 个变量 i 和 j </p>
+<p>i 使用来记录循环次数的</p>
+<p>j 是为了返回结果 整数的</p>
+<p> a&#x3D;s[i:i+2] 是为了 一次性获取2个连续的 罗马数字，</p>
+<p> if a in d  是为了判断 d 这个字典中key 是否有 a 这个数值，（这里的 d 默认代表的就是 key的值）</p>
+<p>j+&#x3D;d.get(s[i:i+2])  如果存在，就进行 转换 将数值添加到 j 里面去，i+&#x3D;2 并且 下标前进2位</p>
+<p>j+&#x3D;d.get(s[i]) 如果不存在 就进行 转换 将数值添加到 j 里面去，i+&#x3D;1 并且 下标只前进1位</p>
+<h2 id="最长公共前缀"><a href="#最长公共前缀" class="headerlink" title="最长公共前缀"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-common-prefix/">最长公共前缀</a></h2><p><img src="/2023/03/11/%E5%8A%9B%E6%89%A3-%E7%AE%80%E5%8D%95/Snipaste_2023-03-11_20-27-56.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def longestCommonPrefix(self, strs: List[str]) -&gt; str:</span><br><span class="line">        qqq=&#x27;&#x27;</span><br><span class="line">        for i in zip(*strs):</span><br><span class="line">            a=set(i)</span><br><span class="line">            if len(a)==1:</span><br><span class="line">               qqq+=i[0]</span><br><span class="line">            else:</span><br><span class="line">                break</span><br><span class="line">        return qqq</span><br></pre></td></tr></table></figure>
+
+<p>取每一个单词的同一位置的字母，看是否相同</p>
+<p>使用 zip 函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">zip() 函数用于将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表。</span><br><span class="line">如果各个迭代器的元素个数不一致，则返回列表长度与最短的对象相同，利用 * 号操作符，可以将元组解压为列表。</span><br><span class="line"> a = [1,2,3]</span><br><span class="line"> b = [4,5,6]</span><br><span class="line"> c = [4,5,6,7,8]</span><br><span class="line"> zipped = zip(a,b)     # 打包为元组的列表</span><br><span class="line">[(1, 4), (2, 5), (3, 6)]</span><br></pre></td></tr></table></figure>
+
+<p>for i in zip(*strs):  遍历，使用 set 集合 将元素去重，如果if len(a)&#x3D;&#x3D;1 代表是一样的，则将这个 元素寄到 qqq 中 用来充当返回值，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def longestCommonPrefix(self, strs):</span><br><span class="line">        min_len = min(len(i) for i in strs)</span><br><span class="line">        ret = &quot;&quot;</span><br><span class="line">        for i in range(min_len):</span><br><span class="line">            if len(set(s[i] for s in strs)) &gt; 1:</span><br><span class="line">                break</span><br><span class="line">            ret += strs[0][i]</span><br><span class="line">        return ret</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
     </div>
     
     <div class="post-footer">
@@ -270,7 +342,7 @@
             Table of Contents
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="toc-text"> 两数之和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95"><span class="toc-text">暴力解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F-%E5%8F%8C%E6%8C%87%E9%92%88"><span class="toc-text">排序+双指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash"><span class="toc-text">Hash</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="toc-text"> 两数之和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95"><span class="toc-text">暴力解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F-%E5%8F%8C%E6%8C%87%E9%92%88"><span class="toc-text">排序+双指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash"><span class="toc-text">Hash</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E6%96%87%E6%95%B0"><span class="toc-text">回文数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0"><span class="toc-text"> 罗马数字转整数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80"><span class="toc-text">最长公共前缀</span></a></li></ol>
         
     </div>
 </aside>
