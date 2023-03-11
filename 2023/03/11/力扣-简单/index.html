@@ -19,10 +19,11 @@
     <link rel="dns-prefetch" href="http://example.com">
     <!--SEO-->
 
-<meta name="keywords" content="" />
+<meta name="keywords" content="力扣" />
 
 
-<meta name="description" content="" />
+<meta name="description" content=" 两数之和
+暴力解法123456class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]..." />
 
 
 <meta name="robots" content="all" />
@@ -33,7 +34,7 @@
 
 <title>
     
-    Tag: 函数 |
+    力扣_简单 |
     
     Hexo
 </title>
@@ -156,142 +157,123 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <ol class="breadcrumb">
-    
-    <li>
-        函数
-    </li>
-    
-    
-</ol>
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
+    <div class="post-head">
+        <h1 id="力扣_简单">
+            
+            力扣_简单
+            
+        </h1>
+        <div class="post-meta">
     
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2023/02/19/%E5%87%BD%E6%95%B0/">
-                    函数</a>
-            </h1>
-            <div class="post-meta"> &bull;
-                <time class="post-date" datetime="" title="">
-                    2023年02月19日
-                </time>
-            </div>
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E5%8A%9B%E6%89%A3/" rel="tag">力扣</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/03/11</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="两数之和"><a href="#两数之和" class="headerlink" title=" 两数之和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/"> 两数之和</a></h2><p><img src="/2023/03/11/%E5%8A%9B%E6%89%A3-%E7%AE%80%E5%8D%95/Snipaste_2023-03-11_11-44-15.png"></p>
+<h3 id="暴力解法"><a href="#暴力解法" class="headerlink" title="暴力解法"></a>暴力解法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:</span><br><span class="line">       for i in range(len(nums)):</span><br><span class="line">           a=target-nums[i]</span><br><span class="line">           if a in nums[i+1:]:</span><br><span class="line">               return [i,nums[i+1:].index(a)+i+1]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>通过遍历依次 将 nums下标为 i 的数据拿出来，然后将tager-下标为 i 的数据的差值，用来判断 该数值是否 存在于 nums 下标为 i+1到 最后的 范围里，如果存在就返回 对应的 下标 i 和 nums[i+1:].index(a)+i+1</p>
+<p>为什么这里是  nums[i+1:].index(a)+i+1  ,因为后面的下标是在 nums[i+1：] 这里拿出来的，在实际的nums中 要将 i+1 再加回去，</p>
+<p>肯定有人要问为啥 不直接 nums.index(a) 这样不是也可以去到数据对应的下标吗，为何多此一举</p>
+<p>比如 nums&#x3D;[3,3] ，target&#x3D;6, 如果使用  nums.index(a) 那 return 的结果就是 [0.0]，而不是[0.1]，因为index 通过数值 去取对应的下标 默认都是取 第一个匹配到的值，后面再有也不会匹配到了， </p>
+<p>所以 这个问题的根本原因就是 如何 通过index 去取下标时，能避开已经 得到的下标，从而去取后续的下标，</p>
+<p>一种方法就是 nums[i+1:].index(a)+i+1 通过 切分， 让 nums[i+1:].index(a)+i+1在  nums[i+1:] 这里面去查找，这样就可以避开 下标为 i 的情况，因为后续通过 index 的数据 肯定不包含 i 这个下标了，因为是在   nums[i+1:]里去 查询的 所以对比 nums 需要将再加上 i+1 让  nums[i+1:].index(a)+i+1得到的下标  等于 nums 的下标</p>
+<p>第二种方法是 根据上面所述 如何 通过index 去取下标时，能避开已经 得到的下标，从而去取后续的下标，我们可以将得到的下标通过 nums[i]&#x3D;3333（3333是随便一个数值，是要不影响我们得到后续的下标就行），现在nums.index(a) 就可以直接 避开 i，去取后面值的下标了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:</span><br><span class="line">       for i in range(len(nums)):</span><br><span class="line">           a=target-nums[i]</span><br><span class="line">           if a in nums[i+1:]:</span><br><span class="line">               nums[i]=3333</span><br><span class="line">               return [i,nums.index(a)]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="排序-双指针"><a href="#排序-双指针" class="headerlink" title="排序+双指针"></a>排序+双指针</h3><h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
         </div>
-        <p class="brief">
+        <div>
             
-            调用函数​	python中有很懂的函数，在调用时，需要知道函数名和其参数，
-调用函数 函数名（参数），python的函数有很多，记住一些常用的就行，不了解的可以去下面的地址里去搜索
-使用help也可以查看对应函数的功能
-1234567...
-            
-        </p>
+        </div>
     </div>
 </article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/03/08/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" class="next-post btn btn-default" title='进程和线程'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            进程和线程</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='shenliyang/snippet-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
 
 
+
+</div>
 
                 </main>
                 
-                    
-<aside class="col-md-4 sidebar">
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Search
-    </h3>
-    <div id="search-form">
-        <div id="result-mask" class="hide"></div>
-        <div class="search-area">
-            
-            <input id="search-key" type="search" autocomplete="off" placeholder="Search What？">
-            <button type="button" class="search-form-submit" id="search-local">
-                localSearch</button>
-            
-            
-        </div>
-        <div id="result-wrap" class="hide">
-            <div id="search-result"></div>
-        </div>
-        <div class="hide">
-            <template id="search-tpl">
-                <div class="item">
-                    <a href="/{path}" title="{title}">
-                        <div class="title">{title}</div>
-                        <div class="content">{content}</div>
-                    </a>
-                </div>
-            </template>
-        </div>
-    </div>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Notification
-    </h3>
-    <div class="notification">
-        <p>
-    主题下载：<a href="https://github.com/shenliyang/hexo-theme-snippet" title="fork me" target="_blank">Snippet主题</a> <br/>
-    主题使用：<a href="https://github.com/shenliyang/hexo-theme-snippet/blob/master/README.md#常见问题" title="" target="_blank">常见使用问题</a> <br/>
-    支持主题：<a target="_blank" rel="noopener" href="https://github.com/shenliyang/hexo-theme-snippet/stargazers">Star一下</a>
-</p>
-    </div>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Categories
-    </h3>
-    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E6%97%B6/"><i class="fa" aria-hidden="true">实时</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%A6/"><i class="fa" aria-hidden="true">数学</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><i class="fa" aria-hidden="true">机器学习</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/"><i class="fa" aria-hidden="true">算法</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"><i class="fa" aria-hidden="true">编程语言</i></a><span class="category-list-count">10</span></li></ul>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Archives
-    </h3>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/"><i class="fa" aria-hidden="true">2023年03月</i></a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/"><i class="fa" aria-hidden="true">2023年02月</i></a><span class="archive-list-count">11</span></li></ul>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Tag Cloud
-    </h3>
-    <div class="content tag-cloud">
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
         
-        <a href="/tags/CEP%E6%8A%80%E6%9C%AF/" style="font-size: 10px;">CEP技术</a> <a href="/tags/Flink-Sql/" style="font-size: 10px;">Flink_Sql</a> <a href="/tags/IO%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">IO编程</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/%E5%87%BD%E6%95%B0/" style="font-size: 10px;">函数</a> <a href="/tags/%E5%8A%9B%E6%89%A3/" style="font-size: 10px;">力扣</a> <a href="/tags/%E5%9B%9B%E5%A4%A7%E5%9F%BA%E7%9F%B3/" style="font-size: 10px;">四大基石</a> <a href="/tags/%E5%BC%82%E5%B8%B8/" style="font-size: 10px;">异常</a> <a href="/tags/%E5%BE%AA%E7%8E%AF/" style="font-size: 10px;">循环</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" style="font-size: 10px;">进程和线程</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象编程</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象高级编程</a> <a href="/tags/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" style="font-size: 10px;">高阶函数</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="toc-text"> 两数之和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95"><span class="toc-text">暴力解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F-%E5%8F%8C%E6%8C%87%E9%92%88"><span class="toc-text">排序+双指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash"><span class="toc-text">Hash</span></a></li></ol></li></ol>
         
     </div>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Friends
-    </h3>
-    <div class="content friends-link">
-        
-        <a href="https://hexo.io/zh-cn/" class="fa" target="_blank">
-            Hexo官网</a>
-        
-    </div>
-</div>
-
-    
 </aside>
-
                 
             </div>
         </div>
@@ -328,10 +310,6 @@
         </div>
     </div>
 </div>
-
-
-<script src="/js/search.js?rev=@@hash.js"></script>
-
 
 
 
