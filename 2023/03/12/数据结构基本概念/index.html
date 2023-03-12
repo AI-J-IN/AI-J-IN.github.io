@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="数据结构基本概念" />
+
+
+<meta name="description" content="数据结构基本概念数据数据是&#x3D;&#x3D;信息的载体&#x3D;&#x3D;，是描述客观事物属性的数、字符及所有能&#x3D;&#x3D;输入到计算机中并被计算机程序识别和处理的符号的集..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    数据结构基本概念 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/编程语言/"><i class="fa "></i>
+                                编程语言</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/算法/"><i class="fa "></i>
+                                算法</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/数学/"><i class="fa "></i>
+                                数学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/机器学习/"><i class="fa "></i>
+                                机器学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/深度学习/"><i class="fa "></i>
+                                深度学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/离线/"><i class="fa "></i>
+                                离线</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/实时/"><i class="fa "></i>
+                                实时</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="数据结构基本概念">
+            
+            数据结构基本概念
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" rel="tag">数据结构基本概念</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/03/12</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="数据结构基本概念"><a href="#数据结构基本概念" class="headerlink" title="数据结构基本概念"></a>数据结构基本概念</h2><h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>数据是&#x3D;&#x3D;信息的载体&#x3D;&#x3D;，是描述客观事物属性的数、字符及所有能&#x3D;&#x3D;输入到计算机中并被计算机程序识别和处理的符号的集合&#x3D;&#x3D;，数据是计算机程序加工的原料</p>
+<h3 id="数据元素，数据项，组合项："><a href="#数据元素，数据项，组合项：" class="headerlink" title="数据元素，数据项，组合项："></a>数据元素，数据项，组合项：</h3><p>数据元素是数据的基本单位，通常作为一个整体进行考虑和处理。</p>
+<p>一个数据元素由多个数据项组成，数据项是构成数据元素的不可分割的最小单位。</p>
+<p>将多个数据项组合成一个 可以称为组合项，（这里要注意 组合项 拆开来都能成为一个单独的数据项，所以多个数据项组合是要彼此之间是有关联的）</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693055385.png"></p>
+<h3 id="数据结构，数据对象"><a href="#数据结构，数据对象" class="headerlink" title="数据结构，数据对象"></a>数据结构，数据对象</h3><p>数据结构是相互之间存在一种或多种特定&#x3D;&#x3D;关系&#x3D;&#x3D;的数据元素的集合</p>
+<p>数据对象是具有&#x3D;&#x3D;相同性质&#x3D;&#x3D;的数据元素的集合，是数据的一个子集。</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693280445.png"></p>
+<h3 id="数据类型，抽象数据类型"><a href="#数据类型，抽象数据类型" class="headerlink" title="数据类型，抽象数据类型"></a>数据类型，抽象数据类型</h3><p>数据类型是一个&#x3D;&#x3D;值的集合&#x3D;&#x3D;和定义在此集合上的&#x3D;&#x3D;一组操作&#x3D;&#x3D;的总称</p>
+<ol>
+<li>原子类型：其值不可再分的数据类型</li>
+<li>结构类型：其值可以再分解为若干成分（分量）的数据类型</li>
+</ol>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650695044517.png"></p>
+<p>抽象数据类型</p>
+<p>（Abstract Data Type，ADT） 是抽象数据组织及与之相关的操作，它关心的是逻辑结构和数据的运算，存储的结构的具体实现并不关心</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650695231746.png"></p>
+<h2 id="数据结构的三要素"><a href="#数据结构的三要素" class="headerlink" title="数据结构的三要素"></a>数据结构的三要素</h2><ol>
+<li>逻辑结构</li>
+<li>物理结构（存储结构）</li>
+<li>数据的运算</li>
+</ol>
+<h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p>逻辑结构 就是数据元素之间的逻辑关系是什么</p>
+<ol>
+<li>集合</li>
+<li>线性结构</li>
+<li>树形结构</li>
+<li>图状结构（网状结构）</li>
+</ol>
+<h4 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h4><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693486023.png"></p>
+<h4 id="线性结构"><a href="#线性结构" class="headerlink" title="线性结构"></a>线性结构</h4><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693557225.png" alt="1650693557225"></p>
+<h4 id="树形结构"><a href="#树形结构" class="headerlink" title="树形结构"></a>树形结构</h4><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693593765.png" alt="1650693593765"></p>
+<h4 id="图状结构（网状结构）"><a href="#图状结构（网状结构）" class="headerlink" title="图状结构（网状结构）"></a>图状结构（网状结构）</h4><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693612373.png" alt="1650693612373"></p>
+<h3 id="物理结构（存储结构）"><a href="#物理结构（存储结构）" class="headerlink" title="物理结构（存储结构）"></a>物理结构（存储结构）</h3><p>物理结构（存储结构） 如何用计算机表示数据元素的逻辑关系</p>
+<ol>
+<li>顺序存储</li>
+<li>链式存储</li>
+<li>索引存储</li>
+<li>散列存储</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2，3，4也可以 称为 非顺序存储</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="线性结构的-四种物理结构"><a href="#线性结构的-四种物理结构" class="headerlink" title="线性结构的 四种物理结构"></a>线性结构的 四种物理结构</h4><h5 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h5><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693913341.png" alt="1650693913341"></p>
+<h5 id="链式存储"><a href="#链式存储" class="headerlink" title="链式存储"></a>链式存储</h5><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650693953652.png" alt="1650693953652"></p>
+<h5 id="索引存储"><a href="#索引存储" class="headerlink" title="索引存储"></a>索引存储</h5><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650694004010.png" alt="1650694004010"></p>
+<h5 id="散列存储"><a href="#散列存储" class="headerlink" title="散列存储"></a>散列存储</h5><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650694033022.png" alt="1650694033022"></p>
+<h4 id="存储结构总结"><a href="#存储结构总结" class="headerlink" title="存储结构总结"></a>存储结构总结</h4><ol>
+<li>若采用&#x3D;&#x3D;顺序存储&#x3D;&#x3D;，则各个数据元素在物理上必须是&#x3D;&#x3D;连续的&#x3D;&#x3D;；若采用&#x3D;&#x3D;非顺序存储&#x3D;&#x3D;，则各个数据元素在物理上可以是&#x3D;&#x3D;离散的&#x3D;&#x3D;。</li>
+<li>数据的&#x3D;&#x3D;存储结构&#x3D;&#x3D;会影响&#x3D;&#x3D;存储空间分配的方便程度&#x3D;&#x3D;（比如插入数据，对于顺序存储来说需要变动的位置很多，而非顺序存储是要给一个号就行了，不用去变动其他的）</li>
+<li>数据的&#x3D;&#x3D;存储结构&#x3D;&#x3D;会影响对&#x3D;&#x3D;数据运算的速度&#x3D;&#x3D;（因为顺序存储有一定的顺序所以可以快速的找到，但非顺序存储需要全部找一遍才能找到想要的）</li>
+</ol>
+<h3 id="数据的运算"><a href="#数据的运算" class="headerlink" title="数据的运算"></a>数据的运算</h3><p>施加在数据上的运算包括运算的定义和实现，&#x3D;&#x3D;运算的定义&#x3D;&#x3D;是针对&#x3D;&#x3D;逻辑结构&#x3D;&#x3D;的，指出运算的功能；&#x3D;&#x3D;运算的实现&#x3D;&#x3D;是针对&#x3D;&#x3D;存储结构&#x3D;&#x3D;的，指出运算的具体操作步骤</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650694769359.png" alt="1650694769359"></p>
+<h3 id="数据结构总结"><a href="#数据结构总结" class="headerlink" title="数据结构总结"></a>数据结构总结</h3><p>在探讨一种数据结构时：</p>
+<ol>
+<li>定义逻辑结构（数据元素之间的关系）</li>
+<li>定义数据的运算（针对现实需求，应该对这种逻辑结构进行什么样的运算）</li>
+<li>确定某种存储结构，实现数据结构，并实现一些对数据结构的基本运算</li>
+</ol>
+<h2 id><a href="#" class="headerlink" title></a></h2><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="什么是算法"><a href="#什么是算法" class="headerlink" title="什么是算法"></a>什么是算法</h3><p>程序&#x3D;数据结构+算法</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650695882154.png" alt="1650695882154"></p>
+<h3 id="算法的五大特效"><a href="#算法的五大特效" class="headerlink" title="算法的五大特效"></a>算法的五大特效</h3><h4 id="有穷性"><a href="#有穷性" class="headerlink" title="有穷性"></a>有穷性</h4><p>​	一个算法必须总在执行有穷步之后结束，且每一步都可在有穷时间内完成。</p>
+<p>注：&#x3D;&#x3D;算法&#x3D;&#x3D;必须是&#x3D;&#x3D;有穷的&#x3D;&#x3D;，而&#x3D;&#x3D;程序&#x3D;&#x3D;可以是&#x3D;&#x3D;无穷的&#x3D;&#x3D;</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650696051935.png" alt="1650696051935"></p>
+<h4 id="确定性"><a href="#确定性" class="headerlink" title="确定性"></a>确定性</h4><p>​	算法中每条指令必须有确切的含义，对于&#x3D;&#x3D;相同的输入&#x3D;&#x3D;只能得到&#x3D;&#x3D;相同的输出&#x3D;&#x3D;</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650696154363.png" alt="1650696154363"></p>
+<h4 id="可行性"><a href="#可行性" class="headerlink" title="可行性"></a>可行性</h4><p>​	算法中描述的操作都可以通过已经实现的&#x3D;&#x3D;基本运算执行有限&#x3D;&#x3D;此来实现</p>
+<h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><p>​	一个算法有&#x3D;&#x3D;零个或多个输入&#x3D;&#x3D;，这些输入取自于某个特定的对象的集合</p>
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><p>​	一个算法有&#x3D;&#x3D;一个或多个输出&#x3D;&#x3D;，这些输出是与输入有着某种特定关系的量（比如函数）</p>
+<h3 id="“好”算法的特质"><a href="#“好”算法的特质" class="headerlink" title="“好”算法的特质"></a>“好”算法的特质</h3><h4 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h4><p>​	算法应该能够正确的解决求解的问题</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650696424746.png" alt="1650696424746"></p>
+<h4 id="可读性"><a href="#可读性" class="headerlink" title="可读性"></a>可读性</h4><p>​	算法应具有良好的可读性，以帮助人们理解</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650696503248.png" alt="1650696503248"></p>
+<h4 id="健壮性"><a href="#健壮性" class="headerlink" title="健壮性"></a>健壮性</h4><p>​	输入非法数据时，算法能适当地做出反应或进行处理，而不是产生莫名其妙的输出结果。</p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650696583287.png" alt="1650696583287"></p>
+<h4 id="高效率与低存储量需求"><a href="#高效率与低存储量需求" class="headerlink" title="高效率与低存储量需求"></a>高效率与低存储量需求</h4><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650696689584.png" alt="1650696689584"></p>
+<h2 id="算法效率的度量"><a href="#算法效率的度量" class="headerlink" title="算法效率的度量"></a>算法效率的度量</h2><h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650697950549.png" alt="1650697950549"></p>
+<p> <img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650698144707.png" alt="1650698144707"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650698334914.png" alt="1650698334914"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650698480339.png" alt="1650698480339"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650698659092.png" alt="1650698659092"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650698772015.png" alt="1650698772015"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650698834676.png" alt="1650698834676"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650698933545.png" alt="1650698933545"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650699092562.png" alt="1650699092562"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650699126161.png" alt="1650699126161"></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650699198462.png" alt="1650699198462"></p>
+<h3 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650699466119.png" alt="1650699466119"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650700932454.png" alt="1650700932454"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650778179794.png" alt="1650778179794"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650778234982.png" alt="1650778234982"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650778443264.png" alt="1650778443264"></p>
+<p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650778522548.png" alt="1650778522548"></p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p><img src="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1650778607509.png" alt="1650778607509"></p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/03/11/%E5%8A%9B%E6%89%A3-%E7%AE%80%E5%8D%95/" class="next-post btn btn-default" title='力扣_简单'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            力扣_简单</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='shenliyang/snippet-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">数据结构基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-text">数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%85%83%E7%B4%A0%EF%BC%8C%E6%95%B0%E6%8D%AE%E9%A1%B9%EF%BC%8C%E7%BB%84%E5%90%88%E9%A1%B9%EF%BC%9A"><span class="toc-text">数据元素，数据项，组合项：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1"><span class="toc-text">数据结构，数据对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型，抽象数据类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-text">数据结构的三要素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="toc-text">逻辑结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-text">集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%84"><span class="toc-text">线性结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84"><span class="toc-text">树形结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%8A%B6%E7%BB%93%E6%9E%84%EF%BC%88%E7%BD%91%E7%8A%B6%E7%BB%93%E6%9E%84%EF%BC%89"><span class="toc-text">图状结构（网状结构）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84%EF%BC%88%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%EF%BC%89"><span class="toc-text">物理结构（存储结构）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%84%E7%9A%84-%E5%9B%9B%E7%A7%8D%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="toc-text">线性结构的 四种物理结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8"><span class="toc-text">顺序存储</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="toc-text">链式存储</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%AD%98%E5%82%A8"><span class="toc-text">索引存储</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%A3%E5%88%97%E5%AD%98%E5%82%A8"><span class="toc-text">散列存储</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E6%80%BB%E7%BB%93"><span class="toc-text">存储结构总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-text">数据的运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%80%BB%E7%BB%93"><span class="toc-text">数据结构总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AE%97%E6%B3%95"><span class="toc-text">什么是算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%9A%84%E4%BA%94%E5%A4%A7%E7%89%B9%E6%95%88"><span class="toc-text">算法的五大特效</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E7%A9%B7%E6%80%A7"><span class="toc-text">有穷性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7"><span class="toc-text">确定性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="toc-text">可行性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%85%A5"><span class="toc-text">输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA"><span class="toc-text">输出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%A5%BD%E2%80%9D%E7%AE%97%E6%B3%95%E7%9A%84%E7%89%B9%E8%B4%A8"><span class="toc-text">“好”算法的特质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E6%80%A7"><span class="toc-text">正确性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="toc-text">可读性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%A5%E5%A3%AE%E6%80%A7"><span class="toc-text">健壮性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E6%95%88%E7%8E%87%E4%B8%8E%E4%BD%8E%E5%AD%98%E5%82%A8%E9%87%8F%E9%9C%80%E6%B1%82"><span class="toc-text">高效率与低存储量需求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%95%88%E7%8E%87%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="toc-text">算法效率的度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-text">时间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-text">空间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
