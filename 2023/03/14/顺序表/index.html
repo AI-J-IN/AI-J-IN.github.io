@@ -1,0 +1,441 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="顺序表" />
+
+
+<meta name="description" content="线性表一个线性表是某类元素的一个集合，还记录着元素之间的一种顺序关系
+顺序表将元素顺序地存放在一块连续的存储区里，元素间的顺序关系由它们的存储顺序自然表示
+顺序表的基本形式
+图a表示的是顺序表的..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    顺序表 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/编程语言/"><i class="fa "></i>
+                                编程语言</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/算法/"><i class="fa "></i>
+                                算法</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/数学/"><i class="fa "></i>
+                                数学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/机器学习/"><i class="fa "></i>
+                                机器学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/深度学习/"><i class="fa "></i>
+                                深度学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/离线/"><i class="fa "></i>
+                                离线</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/实时/"><i class="fa "></i>
+                                实时</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="顺序表">
+            
+            顺序表
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E9%A1%BA%E5%BA%8F%E8%A1%A8/" rel="tag">顺序表</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/03/14</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><p>一个线性表是某类元素的一个集合，还记录着元素之间的一种顺序关系</p>
+<h2 id="顺序表"><a href="#顺序表" class="headerlink" title="顺序表"></a>顺序表</h2><p>将元素顺序地存放在一块连续的存储区里，元素间的顺序关系由它们的存储顺序自然表示</p>
+<h3 id="顺序表的基本形式"><a href="#顺序表的基本形式" class="headerlink" title="顺序表的基本形式"></a>顺序表的基本形式</h3><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_19-11-06.png"></p>
+<p>图a表示的是顺序表的基本形式，数据元素本身连续存储，每个元素所占的存储单元大小固定相同(元素类型一致)，元素的下标是其逻辑地址，而元素存储的物理地址（实际内存地址）可以通过存储区的起始地址Loc (e0)加上逻辑地址（第i个元素）与存储单元大小（c）的乘积计算而得，即：</p>
+<p><strong>Loc(ei) &#x3D; Loc(e0) + c*i</strong></p>
+<p>故，访问指定元素时无需从头遍历，通过计算便可获得对应地址，其时间复杂度为O(1)。</p>
+<p>如果元素的大小不统一，则须采用图b的元素外置的形式，将实际数据元素另行存储，而顺序表中各单元位置保存对应元素的地址信息（即链接）。由于每个链接所需的存储量相同，通过上述公式，可以计算出元素链接的存储位置，而后顺着链接找到实际存储的数据元素。<strong>注意，图b中的c不再是数据元素的大小，而是存储一个链接地址所需的存储量，这个量通常很小。</strong></p>
+<p>图b这样的顺序表也被称为对实际数据的索引，这是最简单的索引结构。</p>
+<h3 id="顺序表的结构"><a href="#顺序表的结构" class="headerlink" title="顺序表的结构"></a>顺序表的结构</h3><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_20-48-19.png"></p>
+<p>​	一个顺序表的完整信息包括两部分，一部分是表中的元素集合，另一部分是为实现正确操作而需记录的信息，即有关表的整体情况的信息，这部分信息主要包括元素存储区的<strong>容量</strong>和当前表中已有的<strong>元素个数</strong>两项。</p>
+<h4 id="顺序表的两种基本实现方式"><a href="#顺序表的两种基本实现方式" class="headerlink" title="顺序表的两种基本实现方式"></a>顺序表的两种基本实现方式</h4><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_20-48-45.png"></p>
+<p>​	</p>
+<p>​	图a为一体式结构，存储表信息的单元与元素存储区以连续的方式安排在一块存储区里，两部分数据的整体形成一个完整的顺序表对象。一体式结构整体性强，易于管理。 但是由于数据元素存储区域是表对象的一部分，顺序表创建后，元素存储区就固定了，缺点：添加数据超过了 容量，就需要重新找一块区域，整体迁移过去，才能实现容量的增大</p>
+<p>​	图b为分离式结构，表对象里只保存与整个表有关的信息（即容量和元素个数），实际数据元素存放在另一个独立的元素存储区里，通过链接与基本表对象关联。</p>
+<h5 id="一体式和分离式的区别"><a href="#一体式和分离式的区别" class="headerlink" title="一体式和分离式的区别"></a>一体式和分离式的区别</h5><p>增加数据导致超过容量时，一体式需要重新申请内存空间，而分离式只需要改变指向的地址就可以</p>
+<p>一般情况下容量都不是固定的，所以用分离式的居多</p>
+<h4 id="元素存储区替换"><a href="#元素存储区替换" class="headerlink" title="元素存储区替换"></a>元素存储区替换</h4><p>​	一体式结构由于顺序表信息区与数据区连续存储在一起，所以若想更换数据区，则只能整体搬迁，即整个顺序表对象（指存储顺序表的结构信息的区域）改变了。</p>
+<p>​	分离式结构若想更换数据区，只需将表信息区中的数据区链接地址更新即可，而该顺序表对象不变。</p>
+<h4 id="元素存储区扩充"><a href="#元素存储区扩充" class="headerlink" title="元素存储区扩充"></a>元素存储区扩充</h4><p>采用分离式结构的顺序表，若将数据区更换为存储空间更大的区域，则可以在不改变表对象的前提下对其数据存储区进行了扩充，所有使用这个表的地方都不必修改。只要程序的运行环境（计算机系统）还有空闲存储，这种表结构就不会因为满了而导致操作无法进行。人们把采用这种技术实现的顺序表称为动态顺序表，因为其容量可以在使用中动态变化。</p>
+<h5 id="扩充的两种策略"><a href="#扩充的两种策略" class="headerlink" title="扩充的两种策略"></a>扩充的两种策略</h5><ul>
+<li><p>每次扩充增加固定数目的存储位置，如每次扩充增加10个元素位置，这种策略可称为线性增长。</p>
+<p>特点：节省空间，但是扩充操作频繁，操作次数多。</p>
+</li>
+<li><p>每次扩充容量加倍，如每次扩充增加一倍存储空间。</p>
+<p>特点：减少了扩充操作的执行次数，但可能会浪费空间资源。以&#x3D;&#x3D;空间换时间&#x3D;&#x3D;，推荐的方式。</p>
+</li>
+</ul>
+<h3 id="顺序表操作"><a href="#顺序表操作" class="headerlink" title="顺序表操作"></a>顺序表操作</h3><h4 id="增加元素"><a href="#增加元素" class="headerlink" title="增加元素"></a>增加元素</h4><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_21-08-57.png"></p>
+<p>a. 尾端加入元素，时间复杂度为O(1)</p>
+<p>b. 非保序的加入元素（不常见），时间复杂度为O(1)</p>
+<p>c. 保序的元素加入，时间复杂度为O(n)</p>
+<h4 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h4><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_21-09-22.png"></p>
+<p>a. 删除表尾元素，时间复杂度为O(1)</p>
+<p>b. 非保序的元素删除（不常见），时间复杂度为O(1)</p>
+<p>c. 保序的元素删除，时间复杂度为O(n)</p>
+<h3 id="Python中的顺序表"><a href="#Python中的顺序表" class="headerlink" title="Python中的顺序表"></a>Python中的顺序表</h3><p>Python中的list和tuple两种类型采用了顺序表的实现技术，具有前面讨论的顺序表的所有性质。</p>
+<p>tuple是不可变类型，即不变的顺序表，因此不支持改变其内部状态的任何操作，而其他方面，则与list的性质类似。</p>
+<h4 id="list的基本实现技术"><a href="#list的基本实现技术" class="headerlink" title="list的基本实现技术"></a>list的基本实现技术</h4><p>​	Python标准类型list就是一种元素个数可变的线性表，可以加入和删除元素，并在各种操作中维持已有元素的顺序（即保序），而且还具有以下行为特征：</p>
+<ul>
+<li><p>基于下标（位置）的高效元素访问和更新，时间复杂度应该是O(1)；</p>
+<p>为满足该特征，应该采用顺序表技术，表中元素保存在一块连续的存储区中。</p>
+</li>
+<li><p>允许任意加入元素，而且在不断加入元素的过程中，表对象的标识（函数id得到的值）不变。</p>
+<p>为满足该特征，就必须能更换元素存储区，并且为保证更换存储区时list对象的标识id不变，只能采用分离式实现技术。</p>
+</li>
+</ul>
+<p>在Python的官方实现中，<strong>list就是一种采用分离式技术实现的动态顺序表</strong>。这就是为什么用list.append(x) （或 list.insert(len(list), x)，即尾部插入）比在指定位置插入元素效率高的原因。</p>
+<p>在Python的官方实现中，list实现采用了如下的策略：在建立空表（或者很小的表）时，系统分配一块能容纳8个元素的存储区；在执行插入操作（insert或append）时，如果元素存储区满就换一块4倍大的存储区。但如果此时的表已经很大（目前的阀值为50000），则改变策略，采用加一倍的方法。引入这种改变策略的方式，是为了避免出现过多空闲的存储位置。</p>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>将元素存放在通过链接构造起来的一系列存储块中</p>
+<h3 id="为什么需要链表"><a href="#为什么需要链表" class="headerlink" title="为什么需要链表"></a>为什么需要链表</h3><p>​	顺序表的构建需要预先知道数据大小来申请连续的存储空间，而在进行扩充时又需要进行数据的搬迁，所以使用起来并不是很灵活。</p>
+<p>链表结构可以充分利用计算机内存空间，实现灵活的内存动态管理。</p>
+<h3 id="链表的定义"><a href="#链表的定义" class="headerlink" title="链表的定义"></a>链表的定义</h3><p>​	链表（Linked list）是一种常见的基础数据结构，是一种线性表，但是不像顺序表一样连续存储数据，而是在每一个节点（数据存储单元）里存放下一个节点的位置信息（即地址）。</p>
+<p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_21-55-12.png"></p>
+<h3 id="单向链表"><a href="#单向链表" class="headerlink" title="单向链表"></a>单向链表</h3><p>​	单向链表也叫单链表，是链表中最简单的一种形式，它的每个节点包含两个域，一个信息域（元素域）和一个链接域。这个链接指向链表中的下一个节点，而最后一个节点的链接域则指向一个空值。</p>
+<p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_22-00-17.png"></p>
+<ul>
+<li>表元素域elem用来存放具体的数据。</li>
+<li>链接域next用来存放下一个节点的位置（python中的标识）</li>
+<li>变量p指向链表的头节点（首节点）的位置，从p出发能找到表中的任意节点。</li>
+</ul>
+<h4 id="节点实现"><a href="#节点实现" class="headerlink" title="节点实现"></a>节点实现</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class SingleNode(object):</span><br><span class="line">    &quot;&quot;&quot;单链表的结点&quot;&quot;&quot;</span><br><span class="line">    def __init__(self,item):</span><br><span class="line">        # _item存放数据元素</span><br><span class="line">        self.item = item</span><br><span class="line">        # _next是下一个节点的标识</span><br><span class="line">        self.next = None</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="单链表的操作"><a href="#单链表的操作" class="headerlink" title="单链表的操作"></a>单链表的操作</h4><ul>
+<li>is_empty() 链表是否为空</li>
+<li>length() 链表长度</li>
+<li>travel() 遍历整个链表</li>
+<li>add(item) 链表头部添加元素</li>
+<li>append(item) 链表尾部添加元素</li>
+<li>insert(pos, item) 指定位置添加元素</li>
+<li>remove(item) 删除节点</li>
+<li>search(item) 查找节点是否存在</li>
+</ul>
+<h4 id="单链表的实现"><a href="#单链表的实现" class="headerlink" title="单链表的实现"></a>单链表的实现</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class SingleLinkList(object):</span><br><span class="line">    &quot;&quot;&quot;单链表&quot;&quot;&quot;</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self._head = None</span><br><span class="line"></span><br><span class="line">    def is_empty(self):</span><br><span class="line">        &quot;&quot;&quot;判断链表是否为空&quot;&quot;&quot;</span><br><span class="line">        return self._head == None</span><br><span class="line"></span><br><span class="line">    def length(self):</span><br><span class="line">        &quot;&quot;&quot;链表长度&quot;&quot;&quot;</span><br><span class="line">        # cur初始时指向头节点</span><br><span class="line">        cur = self._head</span><br><span class="line">        count = 0</span><br><span class="line">        # 尾节点指向None，当未到达尾部时</span><br><span class="line">        while cur != None:</span><br><span class="line">            count += 1</span><br><span class="line">            # 将cur后移一个节点</span><br><span class="line">            cur = cur.next</span><br><span class="line">        return count</span><br><span class="line"></span><br><span class="line">    def travel(self):</span><br><span class="line">        &quot;&quot;&quot;遍历链表&quot;&quot;&quot;</span><br><span class="line">        cur = self._head</span><br><span class="line">        while cur != None:</span><br><span class="line">            print cur.item,</span><br><span class="line">            cur = cur.next</span><br><span class="line">        print &quot;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="头部添加元素"><a href="#头部添加元素" class="headerlink" title="头部添加元素"></a><strong>头部添加元素</strong></h4><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_22-09-35.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def add(self, item):</span><br><span class="line">        &quot;&quot;&quot;头部添加元素&quot;&quot;&quot;</span><br><span class="line">        # 先创建一个保存item值的节点</span><br><span class="line">        node = SingleNode(item)</span><br><span class="line">        # 将新节点的链接域next指向头节点，即_head指向的位置</span><br><span class="line">        node.next = self._head</span><br><span class="line">        # 将链表的头_head指向新节点</span><br><span class="line">        self._head = node</span><br></pre></td></tr></table></figure>
+
+<h4 id="尾部添加元素"><a href="#尾部添加元素" class="headerlink" title="尾部添加元素"></a><strong>尾部添加元素</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def append(self, item):</span><br><span class="line">      &quot;&quot;&quot;尾部添加元素&quot;&quot;&quot;</span><br><span class="line">      node = SingleNode(item)</span><br><span class="line">      # 先判断链表是否为空，若是空链表，则将_head指向新节点</span><br><span class="line">      if self.is_empty():</span><br><span class="line">          self._head = node</span><br><span class="line">      # 若不为空，则找到尾部，将尾节点的next指向新节点</span><br><span class="line">      else:</span><br><span class="line">          cur = self._head</span><br><span class="line">          while cur.next != None:</span><br><span class="line">              cur = cur.next</span><br><span class="line">          cur.next = node</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="指定位置添加元素"><a href="#指定位置添加元素" class="headerlink" title="指定位置添加元素"></a><strong>指定位置添加元素</strong></h4><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_22-10-09.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def insert(self, pos, item):</span><br><span class="line">      &quot;&quot;&quot;指定位置添加元素&quot;&quot;&quot;</span><br><span class="line">      # 若指定位置pos为第一个元素之前，则执行头部插入</span><br><span class="line">      if pos &lt;= 0:</span><br><span class="line">          self.add(item)</span><br><span class="line">      # 若指定位置超过链表尾部，则执行尾部插入</span><br><span class="line">      elif pos &gt; (self.length()-1):</span><br><span class="line">          self.append(item)</span><br><span class="line">      # 找到指定位置</span><br><span class="line">      else:</span><br><span class="line">          node = SingleNode(item)</span><br><span class="line">          count = 0</span><br><span class="line">          # pre用来指向指定位置pos的前一个位置pos-1，初始从头节点开始移动到指定位置</span><br><span class="line">          pre = self._head</span><br><span class="line">          while count &lt; (pos-1):</span><br><span class="line">              count += 1</span><br><span class="line">              pre = pre.next</span><br><span class="line">          # 先将新节点node的next指向插入位置的节点</span><br><span class="line">          node.next = pre.next</span><br><span class="line">          # 将插入位置的前一个节点的next指向新节点</span><br><span class="line">          pre.next = node</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a><strong>删除节点</strong></h4><p><img src="/2023/03/14/%E9%A1%BA%E5%BA%8F%E8%A1%A8/Snipaste_2023-03-14_22-10-32.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def remove(self,item):</span><br><span class="line">        &quot;&quot;&quot;删除节点&quot;&quot;&quot;</span><br><span class="line">        cur = self._head</span><br><span class="line">        pre = None</span><br><span class="line">        while cur != None:</span><br><span class="line">            # 找到了指定元素</span><br><span class="line">            if cur.item == item:</span><br><span class="line">                # 如果第一个就是删除的节点</span><br><span class="line">                if not pre:</span><br><span class="line">                    # 将头指针指向头节点的后一个节点</span><br><span class="line">                    self._head = cur.next</span><br><span class="line">                else:</span><br><span class="line">                    # 将删除位置前一个节点的next指向删除位置的后一个节点</span><br><span class="line">                    pre.next = cur.next</span><br><span class="line">                break</span><br><span class="line">            else:</span><br><span class="line">                # 继续按链表后移节点</span><br><span class="line">                pre = cur</span><br><span class="line">                cur = cur.next</span><br></pre></td></tr></table></figure>
+
+<h4 id="查找节点是否存在"><a href="#查找节点是否存在" class="headerlink" title="查找节点是否存在"></a><strong>查找节点是否存在</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def search(self,item):</span><br><span class="line">       &quot;&quot;&quot;链表查找节点是否存在，并返回True或者False&quot;&quot;&quot;</span><br><span class="line">       cur = self._head</span><br><span class="line">       while cur != None:</span><br><span class="line">           if cur.item == item:</span><br><span class="line">               return True</span><br><span class="line">           cur = cur.next</span><br><span class="line">       return False</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a><strong>测试</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    ll = SingleLinkList()</span><br><span class="line">    ll.add(<span class="number">1</span>)</span><br><span class="line">    ll.add(<span class="number">2</span>)</span><br><span class="line">    ll.append(<span class="number">3</span>)</span><br><span class="line">    ll.insert(<span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;length:&quot;</span>,ll.length()</span><br><span class="line">    ll.travel()</span><br><span class="line">    <span class="built_in">print</span> ll.search(<span class="number">3</span>)</span><br><span class="line">    <span class="built_in">print</span> ll.search(<span class="number">5</span>)</span><br><span class="line">    ll.remove(<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;length:&quot;</span>,ll.length()</span><br><span class="line">    ll.travel()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="链表与顺序表的对比"><a href="#链表与顺序表的对比" class="headerlink" title="链表与顺序表的对比"></a>链表与顺序表的对比</h3><p>链表失去了顺序表随机读取的优点，同时链表由于增加了结点的指针域，空间开销比较大，但对存储空间的使用要相对灵活。</p>
+<p>链表与顺序表的各种操作复杂度如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>链表</th>
+<th>顺序表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问元素</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>在头部插入&#x2F;删除</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>在尾部插入&#x2F;删除</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>在中间插入&#x2F;删除</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+</tbody></table>
+<p>注意虽然表面看起来复杂度都是 O(n)，但是链表和顺序表在插入和删除时进行的是完全不同的操作。链表的主要耗时操作是遍历查找，删除和插入操作本身的复杂度是O(1)。顺序表查找很快，主要耗时的操作是拷贝覆盖。因为除了目标元素在尾部的特殊情况，顺序表进行插入和删除时需要对操作点之后的所有元素进行前后移位操作，只能通过拷贝和覆盖的方法进行。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="next-post btn btn-default" title='数据结构基本概念'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            数据结构基本概念</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='shenliyang/snippet-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E8%A1%A8"><span class="toc-text">线性表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8"><span class="toc-text">顺序表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BD%A2%E5%BC%8F"><span class="toc-text">顺序表的基本形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">顺序表的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%9F%BA%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">顺序表的两种基本实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E4%BD%93%E5%BC%8F%E5%92%8C%E5%88%86%E7%A6%BB%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">一体式和分离式的区别</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%B4%A0%E5%AD%98%E5%82%A8%E5%8C%BA%E6%9B%BF%E6%8D%A2"><span class="toc-text">元素存储区替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%B4%A0%E5%AD%98%E5%82%A8%E5%8C%BA%E6%89%A9%E5%85%85"><span class="toc-text">元素存储区扩充</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%A9%E5%85%85%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%AD%96%E7%95%A5"><span class="toc-text">扩充的两种策略</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="toc-text">顺序表操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-text">增加元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="toc-text">删除元素</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python%E4%B8%AD%E7%9A%84%E9%A1%BA%E5%BA%8F%E8%A1%A8"><span class="toc-text">Python中的顺序表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#list%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%8A%80%E6%9C%AF"><span class="toc-text">list的基本实现技术</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8"><span class="toc-text">链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E9%93%BE%E8%A1%A8"><span class="toc-text">为什么需要链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">链表的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8"><span class="toc-text">单向链表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8A%82%E7%82%B9%E5%AE%9E%E7%8E%B0"><span class="toc-text">节点实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-text">单链表的操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">单链表的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%B4%E9%83%A8%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-text">头部添加元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%BE%E9%83%A8%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-text">尾部添加元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-text">指定位置添加元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9"><span class="toc-text">删除节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E8%8A%82%E7%82%B9%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="toc-text">查找节点是否存在</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8%E4%B8%8E%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-text">链表与顺序表的对比</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
