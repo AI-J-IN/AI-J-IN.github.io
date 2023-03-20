@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="链表" />
+
+
+<meta name="description" content="21. 合并两个有序链表
+123456789101112131415161718192021222324252627282930313233343536# Definition for sing..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    链表练习题 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/编程语言/"><i class="fa "></i>
+                                编程语言</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/算法/"><i class="fa "></i>
+                                算法</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/数学/"><i class="fa "></i>
+                                数学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/机器学习/"><i class="fa "></i>
+                                机器学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/深度学习/"><i class="fa "></i>
+                                深度学习</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/离线/"><i class="fa "></i>
+                                离线</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/实时/"><i class="fa "></i>
+                                实时</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="链表练习题">
+            
+            链表练习题
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/03/20</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h4 id="21-合并两个有序链表"><a href="#21-合并两个有序链表" class="headerlink" title="21. 合并两个有序链表"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-sorted-lists/">21. 合并两个有序链表</a></h4><p><img src="/2023/03/20/%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/Snipaste_2023-03-20_18-56-16.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, next=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.next = next</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">mergeTwoLists</span>(<span class="params">self, list1: <span class="type">Optional</span>[ListNode], list2: <span class="type">Optional</span>[ListNode]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> list1 <span class="keyword">and</span>  <span class="keyword">not</span> list2:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> list1:</span><br><span class="line">            <span class="keyword">return</span> list2</span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> list2:</span><br><span class="line">            <span class="keyword">return</span> list1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            jieguo_list=ListNode()</span><br><span class="line">            head=jieguo_list</span><br><span class="line">            <span class="keyword">while</span> list1 <span class="keyword">and</span>  list2:</span><br><span class="line">                <span class="keyword">if</span> list1.val&lt;list2.val:</span><br><span class="line">                    zhongj=ListNode(list1.val)</span><br><span class="line">                    list1=list1.<span class="built_in">next</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    zhongj=ListNode(list2.val)</span><br><span class="line">                    list2=list2.<span class="built_in">next</span></span><br><span class="line">                jieguo_list.<span class="built_in">next</span>=zhongj</span><br><span class="line">                jieguo_list=jieguo_list.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">while</span> list1:</span><br><span class="line">                zhongj=ListNode(list1.val)</span><br><span class="line">                list1=list1.<span class="built_in">next</span></span><br><span class="line">                jieguo_list.<span class="built_in">next</span>=zhongj</span><br><span class="line">                jieguo_list=jieguo_list.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">while</span> list2:</span><br><span class="line">                zhongj=ListNode(list2.val)</span><br><span class="line">                list2=list2.<span class="built_in">next</span></span><br><span class="line">                jieguo_list.<span class="built_in">next</span>=zhongj</span><br><span class="line">                jieguo_list=jieguo_list.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">return</span> head.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
+<p>​	审题 我们可以知道只要遍历两个链表进行比较，将新的链表指向小的那个地址就可以</p>
+<p>​	首先考虑几个边界条件，即两个链表是否有数据，如果不是都有，则返回对应的情况</p>
+<p>如果两则都有则需要判断</p>
+<p>​	第一步：创建一个空的链表，用来保存结果，将head指向这个新链表（jieguo_list），然后循环list1和list2是否同时有数据，进行判断如果满足条件 list1的val 小于 list2的val,就用list1的val放到 ListNode里（zhongj），生产一个临时的节点，如果不满足则使用list2.val。</p>
+<p>​	然后将 jieguo_list 的next指向 zhongj地址，再移动jieguo_list 到 jieguo_list.next的地址上</p>
+<p>​	上面的条件是将list1和list2相同长度的进行对比，当两个链表长度不一样，就会有一边的值为None，就无法判断，就能导致有一个链表有值，但是无法加到 jieguo_list 中去，所以需要while list1 和 while list2 来消除这种情况</p>
+<h4 id="83-删除排序链表中的重复元素"><a href="#83-删除排序链表中的重复元素" class="headerlink" title="83. 删除排序链表中的重复元素"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-duplicates-from-sorted-list/">83. 删除排序链表中的重复元素</a></h4><p><img src="/2023/03/20/%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/Snipaste_2023-03-20_19-13-32.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># Definition for singly-linked list.</span><br><span class="line"># class ListNode:</span><br><span class="line">#     def __init__(self, val=0, next=None):</span><br><span class="line">#         self.val = val</span><br><span class="line">#         self.next = next</span><br><span class="line">class Solution:</span><br><span class="line">    def deleteDuplicates(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:</span><br><span class="line">        if not head:</span><br><span class="line">            return None</span><br><span class="line">        </span><br><span class="line">        cur=head</span><br><span class="line">        while cur.next!=None:</span><br><span class="line">            if cur.next.val==cur.val:</span><br><span class="line">                cur.next=cur.next.next</span><br><span class="line">            else:</span><br><span class="line">                cur=cur.next</span><br><span class="line">        return head</span><br></pre></td></tr></table></figure>
+
+<pre><code> 审题，我们可以知道，这是一个已经排序的链表，所以重复的数字一定是连续的，所以我们只要将当前的值和下一个地址的值就行比较就可以
+</code></pre>
+<p>​	首先排除边界条件 head 为Node的情况</p>
+<p>​	创建一个游标cur，循环的条件是 cur.next 不为None，及到链表结尾的结束，进行判断 当前游标的值 是否等于当先游标的next的值，如果是 就将 当前游标的next 指向 当前游标的next的next，跳过。如果不是就 移动 当前游标到当前游标的next的位置</p>
+<h4 id="141-环形链表"><a href="#141-环形链表" class="headerlink" title="141. 环形链表"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/linked-list-cycle/">141. 环形链表</a></h4><p><img src="/2023/03/20/%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/Snipaste_2023-03-20_19-22-34.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># Definition for singly-linked list.</span><br><span class="line"># class ListNode:</span><br><span class="line">#     def __init__(self, x):</span><br><span class="line">#         self.val = x</span><br><span class="line">#         self.next = None</span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def hasCycle(self, head: Optional[ListNode]) -&gt; bool:</span><br><span class="line">        a=set()</span><br><span class="line"></span><br><span class="line">        while head!=None:</span><br><span class="line">            if head in a :</span><br><span class="line">                return True</span><br><span class="line">            a.add(head)</span><br><span class="line">            head=head.next</span><br><span class="line">        return False</span><br></pre></td></tr></table></figure>
+
+<pre><code> 审题，我们可以知道，这里是要判断链表尾节点的next是否指向该链表中任意一个地址
+</code></pre>
+<p>​	首先创建一个 空集合，是为了去重，然后循环条件是head!&#x3D;None ,不能是head.next!&#x3D;None，否则就拿不到尾节点next的地址了。然后进行判断head是否在a这个集合里，如果有就 返回True，如果没有就将head添加到a这个集合中，同时再移动head的位置到head.next，循环结束没有满足条件的就返回False</p>
+<h4 id="160-相交链表"><a href="#160-相交链表" class="headerlink" title="160. 相交链表"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-linked-lists/">160. 相交链表</a></h4><p><img src="/2023/03/20/%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/Snipaste_2023-03-20_19-36-21.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># Definition for singly-linked list.</span><br><span class="line"># class ListNode:</span><br><span class="line">#     def __init__(self, x):</span><br><span class="line">#         self.val = x</span><br><span class="line">#         self.next = None</span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -&gt; Optional[ListNode]:</span><br><span class="line">        a=set()</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        while headA:</span><br><span class="line">            a.add(headA)</span><br><span class="line">            headA=headA.next</span><br><span class="line">        </span><br><span class="line">        while headB:</span><br><span class="line">            if headB in a :</span><br><span class="line">                return headB</span><br><span class="line">            headB=headB.next</span><br><span class="line">        return None</span><br></pre></td></tr></table></figure>
+
+<p>​	审题，我们可以知道，这题是让我们找两个链表是否存在同一个节点</p>
+<p>​	首先创建一个空集合a，然后循环 链表headA，将链表headA的值都添加到 a这个集合中。</p>
+<p>​	然后再去循环headB链表,将每一个headB链表里的值都去判断是否在 集合a中，如果有就返回headB的值，没有就移动headB的位置，直到条件都不满足，返回None</p>
+<h4 id="203-移除链表元素"><a href="#203-移除链表元素" class="headerlink" title="203. 移除链表元素"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-linked-list-elements/">203. 移除链表元素</a></h4><p><img src="/2023/03/20/%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/Snipaste_2023-03-20_19-41-19.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># Definition for singly-linked list.</span><br><span class="line"># class ListNode:</span><br><span class="line">#     def __init__(self, val=0, next=None):</span><br><span class="line">#         self.val = val</span><br><span class="line">#         self.next = next</span><br><span class="line">class Solution:</span><br><span class="line">    def removeElements(self, head: Optional[ListNode], val: int) -&gt; Optional[ListNode]:</span><br><span class="line">        if not head:</span><br><span class="line">           return head</span><br><span class="line">        </span><br><span class="line">        self.next=head</span><br><span class="line">        a=self</span><br><span class="line">        while a.next!=None:</span><br><span class="line">            if a.next.val==val:</span><br><span class="line">                a.next=a.next.next</span><br><span class="line">            else:</span><br><span class="line">                a=a.next</span><br><span class="line">        return self.next </span><br></pre></td></tr></table></figure>
+
+<p>​	审题，我们可以知道，需要删除链表head中 val的值，</p>
+<p>​	在力扣中 self.next 表示头节点，</p>
+<p>​	首先将头节点的next指向head这个链表，然后创建一个a的游标，指向self。</p>
+<p>​	然后循环 a.next!&#x3D;None,将每一个a.next.val和val进行判断，如果是的话就将a.next指向 a.next.next的地址，如果不是就移动 游标a&#x3D;a.next</p>
+<h4 id="206-反转链表"><a href="#206-反转链表" class="headerlink" title="206. 反转链表"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-linked-list/">206. 反转链表</a></h4><p><img src="/2023/03/20/%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/Snipaste_2023-03-20_19-56-49.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># Definition for singly-linked list.</span><br><span class="line"># class ListNode:</span><br><span class="line">#     def __init__(self, val=0, next=None):</span><br><span class="line">#         self.val = val</span><br><span class="line">#         self.next = next</span><br><span class="line">class Solution:</span><br><span class="line">    def reverseList(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:</span><br><span class="line">        pre=None</span><br><span class="line">        cur=head</span><br><span class="line">        while cur:</span><br><span class="line">           net=cur.next</span><br><span class="line">           cur.next=pre</span><br><span class="line">           pre=cur</span><br><span class="line">           cur=net </span><br><span class="line">        return pre</span><br></pre></td></tr></table></figure>
+
+<p>​	审题，我们可以知道，这题就是将链表反转过来，也就是将链表的每个元素的next都指向它前一个元素的地址，但python不能直接，需要有个中间变量</p>
+<p>​	首先 创建两个游标，pre指向None ，cur指向链表head的头节点，然后循环 cur是否为None，</p>
+<p>​	然后先将 cur.next的值赋值给变量cur，然后cur.next的指向变成pre,然后将cur赋值给pre，将net赋值到cur(就是将cur移动到原本cur.next的位置，因为这里结果的cur.next已经指向pre，所以需要变量net来保存这个位置节点)</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/03/14/%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="next-post btn btn-default" title='线性表'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            线性表</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='shenliyang/snippet-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#21-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8"><span class="toc-text">21. 合并两个有序链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#83-%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0"><span class="toc-text">83. 删除排序链表中的重复元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8"><span class="toc-text">141. 环形链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#160-%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8"><span class="toc-text">160. 相交链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#203-%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0"><span class="toc-text">203. 移除链表元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8"><span class="toc-text">206. 反转链表</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
